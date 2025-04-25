@@ -100,19 +100,14 @@
             </a>
         </li>
         <li>
-            <a class="nav-link">
-                <i class="fas fa-building me-2"></i> <span class="label">Profil Perusahaan</span>
-            </a>
-        </li>
-        <li>
             <a data-bs-toggle="collapse" href="#penjualanMenu" role="button" class="nav-link dropdown-toggle {{ request()->is('penjualan*') ? 'active' : '' }}">
                 <i class="fas fa-cash-register me-2"></i> <span class="label">Penjualan</span>
             </a>
             <div class="collapse {{ request()->is('penjualan*') ? 'show' : '' }}" id="penjualanMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt me-2"></i> <span class="label">Laporan</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-chart-pie me-2"></i> <span class="label">Grafik</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-boxes me-2"></i> <span class="label">Data Produk</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt me-2"></i> <span class="label">Tambah Data Penjualan</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-chart-pie me-2"></i> <span class="label">Riwayat Penjualan</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-boxes me-2"></i> <span class="label">Kelola Layanan</span></a></li>
                 </ul>
             </div>
         </li>
@@ -124,7 +119,7 @@
                 <ul class="list-unstyled ps-3">
                     <li><a href="#" class="nav-link"><i class="fas fa-list me-2"></i> <span class="label">Semua Artikel</span></a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-plus me-2"></i> <span class="label">Tambah Artikel</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Kategori</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Publikasi Artikel</span></a></li>
                 </ul>
             </div>
         </li>
@@ -136,9 +131,14 @@
                 <ul class="list-unstyled ps-3">
                     <li><a href="#" class="nav-link"><i class="fas fa-question me-2"></i> <span class="label">Semua FAQ</span></a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-plus me-2"></i> <span class="label">Tambah FAQ</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Kategori</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Publikasi FAQ</span></a></li>
                 </ul>
             </div>
+        </li>
+        <li>
+            <a class="nav-link">
+                <i class="fas fa-building me-2"></i> <span class="label">Kontak</span>
+            </a>
         </li>
         <li>
             <a class="nav-link">
