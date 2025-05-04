@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -17,10 +18,19 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    use SoftDeletes;
+
+    protected $table = 'akun';
+
+    protected $primaryKey = 'id_akun';
+
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'no_telp',
+        'level',
     ];
 
     /**
@@ -39,6 +49,9 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        // 'email_verified_at' => 'datetime',
+        'deleted_at',
     ];
+
+    public $timestamps = true;
 }
