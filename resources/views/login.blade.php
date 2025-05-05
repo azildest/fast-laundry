@@ -14,10 +14,12 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="input-group">
-                <input type="text" name="username" class="input-field" placeholder="Email / Username" required>
+                {{-- <input type="text" name="username" class="input-field" placeholder="Email / Username" required> --}}
+                <input type="text" name="username" class="input-field" placeholder="Email / Username">
             </div>
             <div class="input-group">
-                <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
+                {{-- <input type="password" name="password" id="password" class="input-field" placeholder="Password" required> --}}
+                <input type="password" name="password" id="password" class="input-field" placeholder="Password">
                 <span class="password-toggle" onclick="togglePasswordVisibility()">
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </span>

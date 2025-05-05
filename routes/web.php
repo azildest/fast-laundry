@@ -24,19 +24,25 @@ Route::get('/admin/dashboard', function () {
 
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+// Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::post('/login', function () {
+    // Temporarily bypass authentication and redirect
+    return redirect()->intended('/admin/dashboard');
+})->name('login');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Routes for Owner
-Route::middleware(['auth', 'userlevel:2'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard.dashboard');
-    });
-});
+// // Routes for Owner
+// Route::middleware(['auth', 'userlevel:2'])->group(function () {
+//     Route::get('/admin/dashboard', function () {
+//         return view('dashboard.dashboard');
+//     });
+// });
 
-// Routes for Admin
-Route::middleware(['auth', 'userlevel:1'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard.dashboard');
-    });
-});
+// // Routes for Admin
+// Route::middleware(['auth', 'userlevel:1'])->group(function () {
+//     Route::get('/admin/dashboard', function () {
+//         return view('dashboard.dashboard');
+//     });
+// });
