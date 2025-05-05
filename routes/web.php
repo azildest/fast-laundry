@@ -20,3 +20,18 @@ Route::get('/', function () {
 Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
+
+Route::get('/kemitraan', function () {
+    return view('layouts.components.kemitraan');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('kemitraan');
+
+Route::get('/footer', function () {
+    return view('layouts.components.footer');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('footer');
+
+Route::get('/HubungiKami', function () {
+    return view('layouts.components.HubungiKami');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('HubungiKami');
