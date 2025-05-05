@@ -22,6 +22,10 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
+Route::get('/admin/graphics', function () {
+    return view('dashboard.graphics');
+})->name('graphics');
+
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login');
