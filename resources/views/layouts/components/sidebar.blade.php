@@ -1,157 +1,105 @@
-<style>
-    .nav-link.active {
-        color: #0d6efd !important;
-        background-color: transparent !important;
-    }
 
-    .nav-link {
-        color: rgba(255, 255, 255, 0.548) !important;
-    }
-
-    .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .sidebar {
-        transition: all 0.3s ease;
-    }
-
-    .sidebar-collapsed {
-        width: 85px !important;
-        overflow-x: hidden;
-    }
-
-    .sidebar-expanded {
-        width: 250px;
-    }
-
-    .logo-img {
-        width: 100%;
-        max-height: 50px;
-        object-fit: contain;
-    }
-
-    #toggleSidebar {
-        display: inline-block;
-    }
-
-    .sidebar-collapsed .label {
-        display: none;
-    }
-
-    .sidebar-collapsed .nav-link {
-        text-align: left;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-
-    .sidebar-collapsed .nav-link i {
-        margin-right: 0;
-    }
-
-    .sidebar-collapsed .logo-img {
-        display: none;
-    }
-
-    /* @media (max-width: 768px) {
-        #sidebar {
-            position: fixed;
-            z-index: 1000;
-            height: 100vh;
-        }
-
-        #content {
-            margin-left: 250px;
-        }
-
-        .sidebar-collapsed + #content {
-            margin-left: 80px;
-        }
-
-        .sidebar-collapsed {
-            display: block;
-            width: 80px;
-        }
-
-        #toggleSidebar {
-            display: inline-block;
-        }
-    } */
-</style>
-
-<div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar sidebar-expanded" style="height: 100vh;">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+<div id="sidebar" class="d-flex flex-column flex-shrink-0 bg-dark text-white sidebar sidebar-expanded">
+    <div class="d-flex justify-content-between align-items-center logo-container">
         <a href="/" class="text-decoration-none w-100">
             <img src="{{ asset('logo.png') }}" alt="Company Logo" class="logo-img">
         </a>
-        <button id="toggleSidebar" class="btn btn-sm btn-outline-light ms-2">☰</button>
     </div>
 
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    {{-- <hr> --}}
+    <ul class="nav nav-pills flex-column mb-3">
+        <li class="menu-section text-uppercase px-3 mt-4">Main</li>
         <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <i class="fas fa-tachometer-alt me-2"></i> <span class="label">Dashboard</span>
+            <a href="{{ route('dashboard') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <span class="d-flex align-items-center">
+                    <i class="fas fa-tachometer-alt me-3"></i> <span class="label">Dashboard</span>
+                </span>
             </a>
         </li>
         <li>
-            <a class="nav-link">
-                <i class="fas fa-chart-line me-2"></i> <span class="label"> Grafik </span>
+            <a class="nav-link d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <i class="fas fa-chart-line me-3"></i> <span class="label"> Graphics </span>
+                </span>
             </a>
         </li>
+
+        <li class="menu-section text-uppercase px-3 mt-3">Content</li>
         <li>
-            <a data-bs-toggle="collapse" href="#penjualanMenu" role="button" class="nav-link dropdown-toggle {{ request()->is('penjualan*') ? 'active' : '' }}">
-                <i class="fas fa-cash-register me-2"></i> <span class="label">Penjualan</span>
+            <a data-bs-toggle="collapse" href="#salesMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('sales*') ? 'active' : '' }}">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-cash-register me-3"></i>
+                    <span class="label">Sales</span>
+                </div>                
+                <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-            <div class="collapse {{ request()->is('penjualan*') ? 'show' : '' }}" id="penjualanMenu">
+            <div class="collapse {{ request()->is('sales*') ? 'show' : '' }}" id="salesMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt me-2"></i> <span class="label">Tambah Data Penjualan</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-chart-pie me-2"></i> <span class="label">Riwayat Penjualan</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-boxes me-2"></i> <span class="label">Kelola Layanan</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Add Data</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">History</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-boxes me-3"></i> <span class="label">Services</span></a></li>
                 </ul>
             </div>
         </li>
         <li>
-            <a data-bs-toggle="collapse" href="#artikelMenu" role="button" class="nav-link dropdown-toggle {{ request()->is('artikel*') ? 'active' : '' }}">
-                <i class="fas fa-newspaper me-2"></i> <span class="label">Artikel</span>
+            <a data-bs-toggle="collapse" href="#articlesMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('articles*') ? 'active' : '' }}">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-newspaper me-3"></i> <span class="label">Articles</span>
+                </div>
+                <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-            <div class="collapse {{ request()->is('artikel*') ? 'show' : '' }}" id="artikelMenu">
+            <div class="collapse {{ request()->is('articles*') ? 'show' : '' }}" id="articlesMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-list me-2"></i> <span class="label">Semua Artikel</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-2"></i> <span class="label">Tambah Artikel</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Publikasi Artikel</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
                 </ul>
             </div>
         </li>
         <li>
-            <a data-bs-toggle="collapse" href="#faqMenu" role="button" class="nav-link dropdown-toggle {{ request()->is('faq*') ? 'active' : '' }}">
-                <i class="fas fa-question-circle me-2"></i> <span class="label">FAQ</span>
+            <a data-bs-toggle="collapse" href="#faqsMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('faqs*') ? 'active' : '' }}">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-question me-3"></i> <span class="label">FAQs</span>
+                </div>
+                <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-            <div class="collapse {{ request()->is('faq*') ? 'show' : '' }}" id="faqMenu">
+            <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-question me-2"></i> <span class="label">Semua FAQ</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-2"></i> <span class="label">Tambah FAQ</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tags me-2"></i> <span class="label">Publikasi FAQ</span></a></li>
+                    {{-- <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Add</span></a></li> --}}
+                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
                 </ul>
             </div>
         </li>
+
+        <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>
-            <a class="nav-link">
-                <i class="fas fa-building me-2"></i> <span class="label">Kontak</span>
+            <a class="nav-link d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <i class="fas fa-phone me-3"></i> <span class="label">Contact</span>
+                </span>
             </a>
         </li>
         <li>
-            <a class="nav-link">
-                <i class="fas fa-user-circle me-2"></i> <span class="label">Akun</span>
+            <a class="nav-link d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <i class="fas fa-user-circle me-3"></i> <span class="label">Accounts</span>
+                </span>
             </a>
         </li>
     </ul>
 </div>
 
-<script>
-    document.getElementById('toggleSidebar').addEventListener('click', function() {
+<div id="sidebarToggleWrapper">
+    <button id="toggleSidebar" class="btn btn-sm btn-dark p-2">☰</button>
+</div>
+
+{{-- <script>
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('sidebar-collapsed');
         sidebar.classList.toggle('sidebar-expanded');
+
+        document.body.classList.toggle('sidebar-collapsed-body');
     });
-</script>
+</script> --}}
