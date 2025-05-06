@@ -15,6 +15,18 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
+    return redirect()->route('visitor.visitordashboard');
+});
+
+Route::get('/visitor/beranda', function () {
+    return view('visitor.visitordashboard');
+})->name('visitor.visitordashboard');
+
+Route::get('/visitor/artikel', function () {
+    return view('visitor.visitorarticle');
+})->name('visitor.visitorarticle');
+
+Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
@@ -45,4 +57,3 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //     Route::get('/admin/dashboard', function () {
 //         return view('dashboard.dashboard');
 //     });
-// });
