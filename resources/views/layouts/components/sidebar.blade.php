@@ -6,7 +6,6 @@
         </a>
     </div>
 
-    {{-- <hr> --}}
     <ul class="nav nav-pills flex-column mb-3">
         <li class="menu-section text-uppercase px-3 mt-4">Main</li>
         <li class="nav-item">
@@ -17,7 +16,7 @@
             </a>
         </li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center">
+            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->is('graphics') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-chart-line me-3"></i> <span class="label"> Graphics </span>
                 </span>
@@ -30,14 +29,14 @@
                 <div class="d-flex align-items-center">
                     <i class="fas fa-cash-register me-3"></i>
                     <span class="label">Sales</span>
-                </div>                
+                </div>
                 <i class="fas fa-chevron-right ms-auto"></i>
             </a>
             <div class="collapse {{ request()->is('sales*') ? 'show' : '' }}" id="salesMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Add Data</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">History</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-boxes me-3"></i> <span class="label">Services</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('sales.add') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Add Data</span></a></li>
+                    <li><a href="{{ route('sales-records') }}" class="nav-link {{ request()->routeIs('sales-records') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">Records</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('sales.services') ? 'active' : '' }}"><i class="fas fa-boxes me-3"></i> <span class="label">Services</span></a></li>
                 </ul>
             </div>
         </li>
@@ -50,9 +49,9 @@
             </a>
             <div class="collapse {{ request()->is('articles*') ? 'show' : '' }}" id="articlesMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.create') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
                 </ul>
             </div>
         </li>
@@ -65,23 +64,22 @@
             </a>
             <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
                 <ul class="list-unstyled ps-3">
-                    {{-- <li><a href="#" class="nav-link"><i class="fas fa-plus me-3"></i> <span class="label">Add</span></a></li> --}}
-                    <li><a href="#" class="nav-link"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('faqs.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
+                    <li><a href="#" class="nav-link {{ request()->routeIs('faqs.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
                 </ul>
             </div>
         </li>
 
         <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center">
+            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('contact') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-phone me-3"></i> <span class="label">Contact</span>
                 </span>
             </a>
         </li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center">
+            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('accounts') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-user-circle me-3"></i> <span class="label">Accounts</span>
                 </span>
@@ -94,12 +92,32 @@
     <button id="toggleSidebar" class="btn btn-sm btn-dark p-2">☰</button>
 </div>
 
-{{-- <script>
-    document.getElementById('toggleSidebar').addEventListener('click', function () {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('sidebar-collapsed');
-        sidebar.classList.toggle('sidebar-expanded');
+        const toggleButton = document.getElementById('toggleSidebar');
+        const navLinksWithDropdown = sidebar.querySelectorAll('[data-bs-toggle="collapse"]');
 
-        document.body.classList.toggle('sidebar-collapsed-body');
+        function isDescendant(parent, child) {
+            let node = child;
+            while (node !== null) {
+                if (node === parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+
+        navLinksWithDropdown.forEach(link => {
+            const targetId = link.getAttribute('href');
+            const collapseElement = document.querySelector(targetId);
+            const isActiveParent = link.classList.contains('active');
+            const activeChild = collapseElement ? collapseElement.querySelector('.nav-link.active') : null;
+
+            if (isActiveParent || activeChild) {
+                const bsCollapse = new bootstrap.Collapse(collapseElement, { show: true });
+            }
+        });
     });
-</script> --}}
+</script>
