@@ -30,9 +30,14 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+// admin side
 Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
+
+Route::get('/admin/sales/records', function () {
+    return view('penjualan.salesview');
+})->name('sales-records');
 
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
