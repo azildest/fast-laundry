@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/adminnavbar.css') }}">
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </head>

@@ -15,9 +15,22 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
+    return redirect()->route('visitor.visitordashboard');
+});
+
+Route::get('/visitor/beranda', function () {
+    return view('visitor.visitordashboard');
+})->name('visitor.visitordashboard');
+
+Route::get('/visitor/artikel', function () {
+    return view('visitor.visitorarticle');
+})->name('visitor.visitorarticle');
+
+Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+// admin side
 Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
@@ -25,6 +38,24 @@ Route::get('/admin/dashboard', function () {
 Route::get('/admin/graphics', function () {
     return view('dashboard.graphics');
 })->name('graphics');
+Route::get('/kemitraan', function () {
+    return view('layouts.components.kemitraan');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('kemitraan');
+
+Route::get('/footer', function () {
+    return view('layouts.components.footer');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('footer');
+
+Route::get('/HubungiKami', function () {
+    return view('layouts.components.HubungiKami');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('HubungiKami');
+
+Route::get('/admin/sales/records', function () {
+    return view('penjualan.salesview');
+})->name('sales-records');
 
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -49,4 +80,3 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //     Route::get('/admin/dashboard', function () {
 //         return view('dashboard.dashboard');
 //     });
-// });
