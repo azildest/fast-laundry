@@ -8,6 +8,11 @@
         <span class="text-black small fw-semibold">Dashboard / Grafik</span>
     </div>
     
+    {{-- Title for Chart Section --}}
+    <div class="p-2 rounded mb-3 mt-3 d-flex align-items-center gap-2" style="background-color: rgba(232,236,239,255);">
+        <i class="fas fa-chart-simple text-secondary"></i>
+        <span class="text-black small fw-semibold">Dashboard / Grafik</span>
+    </div>
 
     {{-- Chart Section --}}
     <div class="mt-5">
