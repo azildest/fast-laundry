@@ -57,4 +57,3 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //     Route::get('/admin/dashboard', function () {
 //         return view('dashboard.dashboard');
 //     });
-// });
