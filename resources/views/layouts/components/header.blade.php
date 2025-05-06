@@ -1,13 +1,23 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAST LAUNDRY</title>
-  <style>
-    body {
+<header class="header">
+  <div class="logo-container">
+      <img src="{{ asset('logo.png') }}" alt="Company Logo" class="logo-img">
+    <div class="logo-text">
+      FAST <br> LAUNDRY
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="/">Beranda</a>
+    <a href="/artikel">Artikel</a>
+    <a href="/kemitraan">Kemitraan</a>
+    <a href="/HubungiKami">Hubungi Kami</a>
+  </nav>
+</header>
+
+<style>
+  body {
       margin: 0;
       font-family: 'Karla', sans-serif;
+      
     }
 
     .header {
@@ -18,6 +28,7 @@
       margin: 0 auto;
       padding: 10px 20px;
       height: 100px;
+      gap: 40px;
     }
 
     .logo-container {
@@ -55,24 +66,4 @@
     .nav a:hover {
       color: #0DAAC9;
     }
-  </style>
-</head>
-<body>
-
-  <header class="header">
-    <div class="logo-container">
-        <img src="{{ asset('logo.png') }}" alt="Company Logo" class="logo-img">
-      <div class="logo-text">
-        FAST <br> LAUNDRY
-      </div>
-    </div>
-    <nav class="nav">
-      <a href="/">Beranda</a>
-      <a href="/artikel">Artikel</a>
-      <a href="/kemitraan">Kemitraan</a>
-      <a href="/kontak">Hubungi Kami</a>
-    </nav>
-  </header>
-
-</body>
-</html>
+</style>
