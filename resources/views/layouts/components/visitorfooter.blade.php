@@ -2,7 +2,7 @@
   <style>
     .footer-container {
       background-color: #ffffff;
-      padding: 50px 20px;
+      padding: 20px 0 0 0;
       color: #26AFE4;
       font-family: 'Roboto', sans-serif;
       box-shadow: 0 -4px 12px rgb(0 0 0 / 0.05);
@@ -20,19 +20,19 @@
       justify-content: center;
       gap: 50px;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+     
     }
 
     .footer-logo {
       display: flex;
       align-items: center;
-      gap: 15px;
-      min-width: 180px;
+   
+      min-width: 280px;
       justify-content: center;
     }
 
     .footer-logo img {
-      width: 60px;
+      width: 100px;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.1));
@@ -47,7 +47,7 @@
       font-size: 24px;
       font-style: italic;
       font-weight: 700;
-      color: #0DAAC9;
+      color: #26AFE4;
       line-height: 1.1;
       text-align: left;
       user-select: none;
@@ -56,7 +56,7 @@
 
     .footer-divider {
       width: 2px;
-      height: 60px;
+      height: 40px;
       background-color: #26AFE4;
       border-radius: 2px;
       flex-shrink: 0;
@@ -67,7 +67,7 @@
       align-items: center;
       gap: 24px;
       justify-content: center;
-      min-width: 220px;
+      min-width: 260px;
     }
 
     .footer-social a {
@@ -79,8 +79,8 @@
     }
 
     .footer-social img {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
       vertical-align: top;
       filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.1));
@@ -93,7 +93,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 600;
       user-select: none;
     }
@@ -164,7 +164,7 @@
   <div class="footer-content">
     <div class="footer-top">
       <div class="footer-logo">
-        <img src="{{ asset('logo.png') }}" alt="Company Logo" width="60" height="auto" />
+        <img src="{{ asset('Logonobackground.png') }}" alt="Company Logo" />
         <div class="footer-logo-text">
           FAST <br /> LAUNDRY
         </div>
@@ -173,21 +173,21 @@
       <div class="footer-divider" aria-hidden="true"></div>
 
       <div class="footer-social" role="list">
-        <a href="#" aria-label="Facebook" role="listitem"><img src="images/facebook.svg" alt="Facebook" /></a>
-        <a href="#" aria-label="X" role="listitem"><img src="images/x.svg" alt="X" /></a>
-        <a href="#" aria-label="LinkedIn" role="listitem"><img src="images/linkedin.svg" alt="LinkedIn" /></a>
-        <a href="#" aria-label="Instagram" role="listitem"><img src="images/instagram.svg" alt="Instagram" /></a>
+        <a href="#" aria-label="Facebook" role="listitem"><img src="{{ asset('facebook.png') }}"/></a>
+        <a href="#" aria-label="X" role="listitem"><img src="{{ asset('x.png') }}" alt="X" /></a>
+        <a href="#" aria-label="LinkedIn" role="listitem"><img src="{{ asset('linkedin.png') }}" alt="LinkedIn" /></a>
+        <a href="#" aria-label="Instagram" role="listitem"><img src="{{ asset('instagram.png') }}" alt="Instagram" /></a>
       </div>
     </div>
 
     <nav class="footer-nav" aria-label="Footer Navigation">
-      <a href="/">Beranda</a>
+      <a href="/visitor/beranda">Beranda</a>
       <span aria-hidden="true">|</span>
-      <a href="/artikel">Artikel</a>
+      <a href="/visitor/artikel">Artikel</a>
       <span aria-hidden="true">|</span>
-      <a href="/kemitraan">Kemitraan</a>
+      <a href="/visitor/kemitraan">Kemitraan</a>
       <span aria-hidden="true">|</span>
-      <a href="/kontak">Hubungi Kami</a>
+      <a href="/visitor/hubungikami">Hubungi Kami</a>
     </nav>
 
     <p class="footer-description">

@@ -26,6 +26,21 @@ Route::get('/visitor/artikel', function () {
     return view('visitor.visitorarticle');
 })->name('visitor.visitorarticle');
 
+Route::get('/visitor/kemitraan', function () {
+    return view('visitor.kemitraan');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('visitor.kemitraan');
+
+Route::get('/visitor/detail', function () {
+    return view('visitor.detail');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('visitor.detail');
+
+Route::get('/visitor/hubungikami', function () {
+    return view('visitor.hubungikami');
+    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
+})->name('visitor.hubungikami');
+
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
@@ -35,20 +50,9 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
-Route::get('/kemitraan', function () {
-    return view('layouts.components.kemitraan');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
-})->name('kemitraan');
 
-Route::get('/footer', function () {
-    return view('layouts.components.footer');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
-})->name('footer');
 
-Route::get('/HubungiKami', function () {
-    return view('layouts.components.HubungiKami');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
-})->name('HubungiKami');
+
 
 Route::get('/admin/sales/records', function () {
     return view('penjualan.salesview');
