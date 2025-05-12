@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\FaqController;
+use App\Models\Faq;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,10 +32,7 @@ Route::get('/visitor/kemitraan', function () {
     // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('visitor.kemitraan');
 
-Route::get('/visitor/detail', function () {
-    return view('visitor.detail');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
-})->name('visitor.detail');
+
 
 Route::get('/visitor/hubungikami', function () {
     return view('visitor.hubungikami');
@@ -50,8 +48,16 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard.dashboard');
 })->name('dashboard');
 
+Route::get('/admin/graphics', function () {
+    return view('dashboard.graphics');
+})->name('graphics');
+
+Route::get('/faq/publikasi', [FaqController::class, 'approvalIndex'])->name('ownerfaq');
 
 
+// Route::get('/admin/faq', function () {
+//     return view('faq.allfaq');
+// })->name('allfaq');
 
 
 Route::get('/admin/sales/records', function () {
@@ -68,6 +74,21 @@ Route::post('/login', function () {
 })->name('login');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/admin/faq', [FaqController::class, 'index'])->name('allfaq');
+
+Route::post('/faq/store', [FaqController::class, 'store'])->name('faq.store');
+Route::resource('faq', \App\Http\Controllers\FaqController::class);
+
+Route::post('/faq/{id}/status', [FaqController::class, 'updateStatus'])->name('faq.status');
+Route::get('/faq/owner/approval', [FaqController::class, 'approvalIndex'])->name('faq.approval');
+
+
+
+Route::get('/visitor/kemitraan', function () {
+    $faqs = Faq::all(); // Ambil data dari tabel `faq`
+    return view('visitor.kemitraan', compact('faqs'));
+});
 
 // // Routes for Owner
 // Route::middleware(['auth', 'userlevel:2'])->group(function () {
