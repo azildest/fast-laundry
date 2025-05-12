@@ -184,11 +184,18 @@
   }
 
   details p {
-    margin-top: 12px;
-    font-size: 20px;
-    color: #222;
-    line-height: 1.4;
-  }
+  margin-top: 12px;
+  font-size: 20px;
+  color: #1b9ccf;
+  line-height: 1.6;
+  background-color: #e7f6fd;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 6px solid #26AFE4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
 
   @media (max-width: 900px) {
     .section-top {

@@ -52,20 +52,14 @@
   <div class="faq-section">
     <h2>Pertanyaan Umum</h2>
 
-    <details>
-      <summary>Apa saja layanan laundry yang tersedia?</summary>
-      <p>Kami menyediakan layanan cuci kering, setrika, antar jemput...</p>
+   @forelse($faqs->where('status', 'approved') as $faq)
+    <details class="mb-2">
+      <summary class="font-semibold cursor-pointer">{{ $faq->pertanyaan }}</summary>
+      <p class="mt-1 text-sm text-gray-700">{{ $faq->jawaban }}</p>
     </details>
-
-    <details>
-      <summary>Bagaimana cara menghindari pakaian saya hilang atau rusak?</summary>
-      <p>Kami menggunakan sistem tag dan inspeksi...</p>
-    </details>
-
-    <details>
-      <summary>Apa yang harus saya lakukan jika ada barang tertinggal?</summary>
-      <p>Segera hubungi kami dalam 1x24 jam...</p>
-    </details>
+  @empty
+    <p>Tidak ada data FAQ saat ini.</p>
+  @endforelse
   </div>
   </div>
   @endsection
