@@ -3,7 +3,7 @@
 } */
 
 body {
-    background: linear-gradient(to bottom, white, white 50%, #3AC8FF 250%);
+    background: linear-gradient(to bottom, white 0%, white 85%, #3AC8FF 100%);
 }
 
 .underline-text {
@@ -63,34 +63,3 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
 }
-
-/* .img-thumbnail {
-    margin-bottom: 10px;
-    width: 70;
-} */
-
-/* .card {
-    border-radius: 1rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
-
-/* .card-body {
-    padding: 1.5rem;
-    text-align: center;
-} */
-
-/* .card img {
-    margin-bottom: 1rem;
-    width: 50px;
-} */
-
-
-/* .mt-4 {
-    margin-top: 1.5rem;
-}
-
-.mb-4 {
-    margin-bottom: 1.5rem;
-} */
-
-
