@@ -50,7 +50,6 @@ Route::get('/', function () {
 
 Route::get('/kemitraan', function () {
     return view('layouts.components.kemitraan');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('kemitraan');
 // admin side
 Route::get('/admin/dashboard', function () {
@@ -70,7 +69,6 @@ Route::get('/faq/publikasi', [FaqController::class, 'approvalIndex'])->name('own
 
 Route::get('/HubungiKami', function () {
     return view('layouts.components.HubungiKami');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('HubungiKami');
 // Visitor
 
