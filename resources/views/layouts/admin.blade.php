@@ -9,6 +9,7 @@
         @stack('styles')
 
 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/adminnavbar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/admintable.css') }}">
@@ -16,11 +17,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        {{-- DataTables, a.k.a formatting table --}}
-        {{-- <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}"> --}}
     </head>
     
 <body>

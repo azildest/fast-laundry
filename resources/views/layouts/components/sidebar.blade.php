@@ -16,7 +16,7 @@
             </a>
         </li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->is('graphics') ? 'active' : '' }}">
+            <a href="{{ route('graphics') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->is('graphics') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-chart-line me-3"></i> <span class="label"> Graphics </span>
                 </span>
@@ -64,9 +64,14 @@
             </a>
             <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link {{ request()->routeIs('faqs.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('faqs.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
-                </ul>
+                    <li><a href="{{ route('allfaq') }}"  class="nav-link {{ request()->routeIs('faqs.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
+                  <li>
+            <a href="{{ route('ownerfaq') }}" class="nav-link {{ request()->routeIs('ownerfaq') ? 'active' : '' }}">
+                <i class="fas fa-list-check me-3"></i> 
+                <span class="label">Publication</span>
+            </a>
+            </li>
+      </ul>
             </div>
         </li>
 

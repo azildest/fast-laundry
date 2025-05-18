@@ -1,0 +1,229 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Karla', sans-serif;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(109, 201, 236, 0.3), rgba(38, 175, 228, 0.3));
+    color: #111;
+    width: 100vw;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    padding-top: 20px;
+  }
+
+  .section-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-top img {
+    width: 500px;
+    height: auto;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+  }
+  .section-top img:hover {
+    transform: scale(1.03);
+  }
+
+  .section-top .text-content {
+    flex: 1;
+    padding-right: 30px;
+    color: #26AFE4;
+  }
+
+  .section-top h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-top p {
+    font-size: 28px;
+    font-weight: 500;
+    margin-top: 20px;
+    text-align: justify;
+    color: #222;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+
+  .keuntungan-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 30px;
+  
+    margin: 0 auto 80px;
+   
+  }
+
+  .keuntungan {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-left: 0;
+  }
+
+  .keuntungan h2 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    padding-left: 40px;
+    color: #26AFE4;
+    text-shadow: 0 1px 3px rgba(11, 114, 185, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .card-mitra {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 25px;
+    padding: 16px 24px;
+    gap: 20px;
+    transition: box-shadow 0.3s ease;
+    cursor: default;
+    max-width: 500px;
+    flex-direction: row;
+  }
+  
+  .card-text-mitra {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.3;
+    user-select: none;
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
+  .card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .card-img-{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+  }
+
+  .gambar-kanan {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .gambar-kanan img {
+    width: 800px;
+    height: 580px;
+    object-fit: cover;
+    max-width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+  }
+  .gambar-kanan img:hover {
+    transform: scale(1.02);
+  }
+
+  .faq-section {
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: 0 auto 80px;
+  }
+
+  .faq-section h2 {
+    font-size: 56px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #26AFE4;
+    text-shadow: 0 1px 3px rgba(11, 114, 185, 0.3);
+  }
+
+  details {
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    padding: 24px 30px;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  details[open] {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  summary {
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    outline-offset: 4px;
+    user-select: none;
+    color: #26AFE4;
+  }
+
+  details p {
+  margin-top: 12px;
+  font-size: 20px;
+  color: #1b9ccf;
+  line-height: 1.6;
+  background-color: #e7f6fd;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 6px solid #26AFE4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+
+  @media (max-width: 900px) {
+    .section-top {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-top img {
+      width: 90vw;
+      max-width: 500px;
+    }
+
+    .section-top .text-content {
+      padding-right: 0;
+    }
+
+    .keuntungan-wrapper {
+      flex-direction: column;
+      padding: 0 10px;
+    }
+
+    .gambar-kanan {
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .gambar-kanan img {
+      width: 90vw;
+      height: auto;
+    }
+  }
