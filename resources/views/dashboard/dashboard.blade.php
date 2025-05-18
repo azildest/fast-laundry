@@ -11,13 +11,15 @@
     <div class="row g-2">
         <!-- Sales Card -->
         <div class="col-md-3">
-            <div class="card text-white text-center p-1" style="background: #288bc5;">
-                <div class="card-body p-2">
-                    <i class="fas fa-cart-shopping fa-2x mb-2"></i>
-                    <h5>0 Sales Today</h5>
-                    <p class="mb-1 small">Total Sales Today</p>
+            <a href="{{ route('sales.records') }}" style="text-decoration: none;">
+                <div class="card text-white text-center p-1" style="background: #288bc5;">
+                    <div class="card-body p-2">
+                        <i class="fas fa-cart-shopping fa-2x mb-2"></i>
+                        <h5>0 Sales Today</h5>
+                        <p class="mb-1 small">Total Sales Today</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         
         <!-- Articles Pending Approval Card -->
