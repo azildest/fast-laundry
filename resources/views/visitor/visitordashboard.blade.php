@@ -1,6 +1,7 @@
 @extends('layouts.web')
 
 @section('content')
+
     <div class="container py-5">
         <div class="row align-items-center mb-5">
             <div class="col-md-6 text-center text-md-start">
@@ -143,8 +144,11 @@
           </div>
           
           <div class="text-center mt-4">
-            <button class="btn btn-info text-black bg-white border-0 px-5">Muat Lagi</button>
-          </div>
+            <button class="btn btn-info text-black bg-white border-0 px-5" onclick="window.location.href='/visitor/artikel'">
+                Muat Lagi
+            </button>
+        </div>
+        
           
         
     </div>
