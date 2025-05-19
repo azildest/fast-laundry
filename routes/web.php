@@ -10,7 +10,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PenjualanController;
 
 use App\Http\Controllers\ArtikelController;
-use App\Models\Faq;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -114,12 +114,24 @@ Route::resource('faq', \App\Http\Controllers\FaqController::class);
 Route::post('/faq/{id}/status', [FaqController::class, 'updateStatus'])->name('faq.status');
 Route::get('/faq/owner/approval', [FaqController::class, 'approvalIndex'])->name('faq.approval');
 
-
+Route::get('/admin/artikel', [artikelController::class, 'index'])->name('allartikel');
 
 Route::get('/visitor/kemitraan', function () {
     $faqs = Faq::all(); // Ambil data dari tabel `faq`
     return view('visitor.kemitraan', compact('faqs'));
 });
+
+
+// Halaman kelola artikel (bisa tetap pakai ini)
+Route::get('/admin/artikel/kelola', [ArtikelController::class, 'kelola'])->name('admin.artikel.kelola');
+
+// Store (tambah) artikel
+Route::post('/admin/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
+
+// Update artikel
+Route::put('/admin/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+
+
 
 // // Routes for Owner
 // Route::middleware(['auth', 'userlevel:2'])->group(function () {
