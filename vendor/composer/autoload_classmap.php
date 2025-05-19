@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\ArtikelController' => $baseDir . '/app/Http/Controllers/ArtikelController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FaqController' => $baseDir . '/app/Http/Controllers/FaqController.php',
     'App\\Http\\Controllers\\LoginController' => $baseDir . '/app/Http/Controllers/LoginController.php',
@@ -22,6 +23,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\UserLevelMiddleware' => $baseDir . '/app/Http/Middleware/UserLevelMiddleware.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Models\\Article' => $baseDir . '/app/Models/Article.php',
     'App\\Models\\Faq' => $baseDir . '/app/Models/Faq.php',
     'App\\Models\\Layanan' => $baseDir . '/app/Models/Layanan.php',
     'App\\Models\\Penjualan' => $baseDir . '/app/Models/Penjualan.php',

@@ -512,6 +512,7 @@ class ComposerStaticInitc61ff82cbf0142a401a48a8161e1595a
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\ArtikelController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArtikelController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FaqController' => __DIR__ . '/../..' . '/app/Http/Controllers/FaqController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
@@ -526,6 +527,7 @@ class ComposerStaticInitc61ff82cbf0142a401a48a8161e1595a
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\UserLevelMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/UserLevelMiddleware.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Article' => __DIR__ . '/../..' . '/app/Models/Article.php',
         'App\\Models\\Faq' => __DIR__ . '/../..' . '/app/Models/Faq.php',
         'App\\Models\\Layanan' => __DIR__ . '/../..' . '/app/Models/Layanan.php',
         'App\\Models\\Penjualan' => __DIR__ . '/../..' . '/app/Models/Penjualan.php',

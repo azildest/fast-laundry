@@ -9,6 +9,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\PenjualanController;
 
+use App\Http\Controllers\ArtikelController;
+use App\Models\Faq;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,20 +31,21 @@ Route::get('/visitor/beranda', function () {
     return view('visitor.visitordashboard');
 })->name('visitor.visitordashboard');
 
-Route::get('/visitor/artikel', function () {
-    return view('visitor.visitorarticle');
-})->name('visitor.visitorarticle');
+// Route::get('/visitor/artikel', function () {
+//     return view('visitor.visitorarticle');
+// })->name('visitor.visitorarticle');
+
+Route::get('/visitor/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+Route::get('visitor/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 
 Route::get('/visitor/kemitraan', function () {
     return view('visitor.kemitraan');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('visitor.kemitraan');
 
 
 
 Route::get('/visitor/hubungikami', function () {
     return view('visitor.hubungikami');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('visitor.hubungikami');
 
 Route::get('/', function () {
@@ -51,7 +54,6 @@ Route::get('/', function () {
 
 Route::get('/kemitraan', function () {
     return view('layouts.components.kemitraan');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('kemitraan');
 // admin side
 Route::get('/admin/dashboard', function () {
@@ -71,7 +73,6 @@ Route::get('/faq/publikasi', [FaqController::class, 'approvalIndex'])->name('own
 
 Route::get('/HubungiKami', function () {
     return view('layouts.components.HubungiKami');
-    // ganti 'landing' sesuai nama file blade-mu tanpa .blade.php
 })->name('HubungiKami');
 // Visitor
 

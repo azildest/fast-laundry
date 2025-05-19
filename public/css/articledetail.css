@@ -1,0 +1,14 @@
+.article-detail-img {
+    max-height: 400px;
+    object-fit: cover;
+  }
+  
+  .article-detail-badge {
+    font-size: 14px;
+  }
+  
+  .article-detail-content {
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  
