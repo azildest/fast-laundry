@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\Faq;
+use App\Models\Layanan;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PenjualanController;
 
 use App\Http\Controllers\FaqController;
-use App\Models\Faq;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PenjualanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,6 +88,13 @@ Route::get('/admin/sales/data_penjualan', [PenjualanController::class, 'data_pen
 Route::get('/admin/sales/{id_penjualan}/edit', [PenjualanController::class, 'edit'])->name('sales.edit');
 Route::put('/admin/sales/{id_penjualan}', [PenjualanController::class, 'update'])->name('sales.update');
 Route::post('/admin/sales/delete/{id_penjualan}', [PenjualanController::class, 'delete'])->name('sales.delete');
+
+// Service/Layanan
+Route::get('/admin/services/records', [LayananController::class, 'index'])->name('services.records');
+Route::get('/admin/services/data_layanan', [LayananController::class, 'data_layanan'])->name('services.data_layanan');
+Route::get('/admin/services/{id_layanan}/edit', [LayananController::class, 'edit'])->name('services.edit');
+Route::put('/admin/services/{id_layanan}', [LayananController::class, 'update'])->name('services.update');
+
 
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

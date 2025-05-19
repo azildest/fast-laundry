@@ -36,7 +36,7 @@
                 <ul class="list-unstyled ps-3">
                     {{-- <li><a href="#" class="nav-link {{ request()->routeIs('sales.add') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Add Data</span></a></li> --}}
                     <li><a href="{{ route('sales.records') }}" class="nav-link {{ request()->routeIs('sales.records') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">Records</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('sales.services') ? 'active' : '' }}"><i class="fas fa-boxes me-3"></i> <span class="label">Services</span></a></li>
+                    <li><a href="{{ route('services.records') }}" class="nav-link {{ request()->routeIs('services.records') ? 'active' : '' }}"><i class="fas fa-boxes me-3"></i> <span class="label">Services</span></a></li>
                 </ul>
             </div>
         </li>
