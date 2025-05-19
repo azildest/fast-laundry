@@ -12,6 +12,7 @@ class Layanan extends Model
     use SoftDeletes;
 
     protected $table = 'layanan';
+    protected $primaryKey = 'id_layanan';
 
     protected $fillable = [
         'id_layanan',
