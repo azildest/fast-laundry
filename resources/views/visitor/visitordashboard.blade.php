@@ -99,49 +99,28 @@
           </div>
           
           <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    @foreach($latestArticles as $item)
+    <div class="col">
+        <div class="card h-100 border-0 shadow rounded-4">
+            <img src="{{ asset('storage/' . ($item->gambar ?? 'default.png')) }}"
+                onerror="this.onerror=null; this.src='{{ asset('default.png') }}';"
+                class="card-img-top rounded-top-4 dashboard-article-img"
+                alt="{{ $item->judul }}">
 
-            <div class="col">
-              <div class="card h-100 border-0 shadow rounded-4">
-                <img src="{{ asset('eco-laundry.png') }}" class="card-img-top rounded-top-4" alt="Eco Laundry">
-                <div class="card-body">
-                    <span class="badge badge-custom mb-2">Eco-Friendly</span>
-                    <p class="text-muted mb-1" style="font-size: 14px;">19/05/2025</p>
-                    <h6 class="fw-semibold">Laundry Ramah Lingkungan: Solusi Bersih Tanpa Merusak Alam</h6>
-                </div>
-                <div class="card-footer bg-transparent border-0 mb-2">
-                    <a href="#" class="btn btn-sm btn-info text-white">Baca Selengkapnya ></a>
-                </div>
-              </div>
+            <div class="card-body">
+                <span class="badge badge-custom mb-2">{{ $item->kategori }}</span>
+                <p class="text-muted mb-1" style="font-size: 14px;">{{ \Carbon\Carbon::parse($item->tanggal_terbit)->format('d/m/Y') }}</p>
+                <h6 class="fw-semibold">{{ $item->judul }}</h6>
             </div>
+            <div class="card-footer bg-transparent border-0 mb-2">
+                <a href="{{ route('artikel.show', $item->id_artikel) }}" class="btn btn-sm btn-info text-white">Baca Selengkapnya ></a>
+            </div>
+        </div>
+    </div>
+@endforeach
 
-            <div class="col">
-              <div class="card h-100 border-0 shadow rounded-4">
-                <img src="{{ asset('smart-laundry.png') }}" class="card-img-top rounded-top-4" alt="Smart Laundry">
-                <div class="card-body">
-                    <span class="badge badge-custom mb-2">Teknologi & Inovasi</span>
-                    <p class="text-muted mb-1" style="font-size: 14px;">22/05/2025</p>
-                    <h6 class="fw-semibold">Inovasi Teknologi di Dunia Laundry: Mesin Cuci Cerdas dan Aplikasi</h6>
-                </div>
-                <div class="card-footer bg-transparent border-0 mb-2">
-                    <a href="#" class="btn btn-sm btn-info text-white">Baca Selengkapnya ></a>
-                </div>
-              </div>
-            </div>
+</div>
 
-            <div class="col">
-              <div class="card h-100 border-0 shadow rounded-4">
-                <img src="{{ asset('home-laundry.png') }}" class="card-img-top rounded-top-4" alt="Home Laundry">
-                <div class="card-body">
-                    <span class="badge badge-custom mb-2">Inspirasi & Kisah Sukses</span>
-                    <p class="text-muted mb-1" style="font-size: 14px;">22/05/2025</p>
-                    <h6 class="fw-semibold">Dari Laundry Rumahan Hingga Omzet Puluhan Juta</h6>
-                </div>
-                <div class="card-footer bg-transparent border-0 mb-2">
-                    <a href="#" class="btn btn-sm btn-info text-white">Baca Selengkapnya ></a>
-                </div>
-              </div>
-            </div>
-          </div>
           
           <div class="text-center mt-4">
             <button class="btn btn-info text-black bg-white border-0 px-5" onclick="window.location.href='/visitor/artikel'">

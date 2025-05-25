@@ -26,7 +26,12 @@ class ArtikelController extends Controller
 
         $articles = $query->orderBy('tanggal_terbit', 'desc')->get();
 
-        return view('visitor.visitorarticle', compact('articles', 'categories'));
+       $allArticles = $query->orderBy('tanggal_terbit', 'desc')->get();
+
+        $highlight = $allArticles->first(); // Ambil artikel terbaru untuk highlight
+        $articles = $allArticles->slice(1); // Sisanya untuk grid
+
+        return view('visitor.visitorarticle', compact('highlight', 'articles', 'categories'));
     }
     public function show($id)
     {
@@ -50,7 +55,7 @@ public function store(Request $request)
         'kategori' => 'required|string|max:100',
         'isi' => 'required|string',
         'gambar' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
-        'thumbnail' => 'nullable|string',
+      
     ]);
 
     $artikel = new Article();
@@ -61,13 +66,12 @@ public function store(Request $request)
     $artikel->tanggal_terbit = now();
 
     // Jika ada upload gambar, simpan file
-    if ($request->hasFile('gambar')) {
-        $file = $request->file('gambar');
-        $path = $file->store('public/artikel');
-        $artikel->thumbnail = $path;
-    } else {
-        $artikel->thumbnail = $request->thumbnail; // jika pakai URL atau catatan
-    }
+   if ($request->hasFile('gambar')) {
+    $file = $request->file('gambar');
+    $filename = $file->store('artikel', 'public');
+    $artikel->gambar = $filename;
+}
+
 
     $artikel->save();
 
@@ -83,24 +87,59 @@ public function update(Request $request, $id)
         'kategori' => 'required|string|max:100',
         'isi' => 'required|string',
         'gambar' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
-        'thumbnail' => 'nullable|string',
+       
     ]);
 
     $artikel->judul = $request->judul;
     $artikel->kategori = $request->kategori;
     $artikel->isi = $request->isi;
+      $artikel->status = 'draft'; // default
+    $artikel->tanggal_terbit = now();
+    
+ if ($request->hasFile('gambar')) {
+    $file = $request->file('gambar');
+    $filename = $file->store('artikel', 'public');
+    $artikel->gambar = $filename;
+}
 
-    if ($request->hasFile('gambar')) {
-        $path = $request->file('gambar')->store('public/artikel');
-        $artikel->thumbnail = $path;
-    } else {
-        $artikel->thumbnail = $request->thumbnail;
-    }
 
     $artikel->save();
 
     return redirect()->route('admin.artikel.kelola')->with('success', 'Artikel berhasil diperbarui');
 }
+
+public function showVerifikasi($id)
+{
+    $artikel = Article::findOrFail($id);
+    return view('admin.artikel.verifikasi', compact('artikel'));
+}
+
+public function approve($id)
+{
+    $artikel = Article::findOrFail($id);
+    $artikel->status = 'publish'; // Gunakan 'publish' agar tampil di website
+    $artikel->tanggal_terbit = now(); // Update tanggal
+    $artikel->save();
+
+    return redirect()->route('admin.artikel.publikasi')->with('success', 'Artikel berhasil dipublikasikan.');
+}
+
+public function block($id)
+{
+    $artikel = Article::findOrFail($id);
+    $artikel->status = 'blocked';
+    $artikel->save();
+
+    return redirect()->route('admin.artikel.publikasi')->with('danger', 'Artikel berhasil diblokir.');
+}
+
+
+public function publikasi()
+{
+    $artikels = Article::whereIn('status', ['draft', 'blocked', 'publish'])->orderBy('created_at', 'desc')->get();
+    return view('artikel.publikasi', compact('artikels'));
+}
+
 
 
 }

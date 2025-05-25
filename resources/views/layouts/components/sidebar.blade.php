@@ -47,33 +47,48 @@
                 </div>
                 <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-            <div class="collapse {{ request()->is('articles*') ? 'show' : '' }}" id="articlesMenu">
-                <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.create') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
-                </ul>
-            </div>
+           <div class="collapse {{ request()->is('admin/artikel*') ? 'show' : '' }}" id="articlesMenu">
+    <ul class="list-unstyled ps-3">
+        <li>
+            <a href="{{ route('admin.artikel.kelola') }}" 
+               class="nav-link {{ request()->routeIs('admin.artikel.kelola') ? 'active' : '' }}">
+                <i class="fas fa-list me-3"></i> <span class="label">Kelola Artikel</span>
+            </a>
         </li>
         <li>
-            <a data-bs-toggle="collapse" href="#faqsMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('faqs*') ? 'active' : '' }}">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-question me-3"></i> <span class="label">FAQs</span>
-                </div>
-                <i class="fas fa-chevron-right ms-auto"></i>
+            <a href="{{ route('admin.artikel.publikasi') }}" 
+               class="nav-link {{ request()->routeIs('admin.artikel.publikasi') ? 'active' : '' }}">
+                <i class="fas fa-list-check me-3"></i> <span class="label">Publikasi</span>
             </a>
-            <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
-                <ul class="list-unstyled ps-3">
-                    <li><a href="{{ route('allfaq') }}"  class="nav-link {{ request()->routeIs('faqs.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
-                  <li>
-            <a href="{{ route('ownerfaq') }}" class="nav-link {{ request()->routeIs('ownerfaq') ? 'active' : '' }}">
-                <i class="fas fa-list-check me-3"></i> 
-                <span class="label">Publication</span>
-            </a>
-            </li>
-      </ul>
-            </div>
         </li>
+    </ul>
+</div>
+
+        </li>
+       <li>
+    <a data-bs-toggle="collapse" href="#faqsMenu" role="button"
+       class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('faq*') ? 'active' : '' }}">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-question me-3"></i> <span class="label">FAQs</span>
+        </div>
+        <i class="fas fa-chevron-right ms-auto"></i>
+    </a>
+    <div class="collapse {{ request()->is('faq*') ? 'show' : '' }}" id="faqsMenu">
+        <ul class="list-unstyled ps-3">
+            <li>
+                <a href="{{ route('allfaq') }}" class="nav-link {{ request()->routeIs('allfaq') ? 'active' : '' }}">
+                    <i class="fas fa-list me-3"></i> <span class="label">All FAQs</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('ownerfaq') }}" class="nav-link {{ request()->routeIs('ownerfaq') ? 'active' : '' }}">
+                    <i class="fas fa-list-check me-3"></i> <span class="label">Publication</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
 
         <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>

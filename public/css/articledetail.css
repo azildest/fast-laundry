@@ -1,7 +1,10 @@
 .article-detail-img {
-    max-height: 400px;
-    object-fit: cover;
-  }
+  height: auto;
+  max-height: 450px; /* atau sesuai kebutuhan */
+  object-fit: cover;
+  object-position: center;
+}
+
   
   .article-detail-badge {
     font-size: 14px;

@@ -20,6 +20,7 @@ class Article extends Model
         'judul',
         'kategori',
         'isi',
+        'gambar', 
         'status',
         'tanggal_terbit',
     ];
