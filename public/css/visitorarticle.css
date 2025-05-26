@@ -71,4 +71,8 @@
     line-height: 1.4;
   }
   
-  
+  .article-img {
+  height: 316px; /* kamu bisa sesuaikan tingginya */
+  object-fit: cover;
+  width: 100%;
+}

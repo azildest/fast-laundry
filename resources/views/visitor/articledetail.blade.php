@@ -6,7 +6,10 @@
     <div class="col-md-10">
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-        <img src="{{ asset('home-laundry.png') }}" class="img-fluid w-100 article-detail-img" alt="{{ $article->judul }}">
+        <img src="{{ asset('storage/' . $article->gambar) }}"
+     onerror="this.onerror=null; this.src='{{ asset('default.png') }}';"
+     class="img-fluid w-100 article-detail-img rounded-top-4"
+     alt="{{ $article->judul }}">
 
         <div class="p-4">
           <div class="row">
