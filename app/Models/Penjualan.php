@@ -13,6 +13,7 @@ class Penjualan extends Model
 
     protected $table = 'penjualan';
     protected $primaryKey = 'id_penjualan';
+    protected $dates = ['pesanan_dibuat'];
 
     protected $fillable = [
         'id_penjualan',
@@ -23,5 +24,11 @@ class Penjualan extends Model
         'whatsapp',
         'status',
         'pesanan_selesai',
+        'pesanan_dibuat',
     ];
+
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'id_layanan', 'id_layanan');
+    }
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     {{-- Buttons for DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endpush
 
 @section('content')
@@ -40,14 +41,16 @@
             
                 <!-- Right: Filters and Reset -->
                 <div class="d-flex flex-wrap gap-2">
-                    <select class="form-select form-select-sm" id="filterLayanan" style="max-width: 150px; font-size: 14px; color: #495057; border: 1px solid #ccc;">
+                    <select class="form-select form-select-sm" id="filter_layanan" style="max-width: 150px; font-size: 14px; color: #495057; border: 1px solid #ccc;">
+                        {{-- <option selected disabled class="text-secondary">Semua Layanan</option> --}}
                         <option value="">Semua Layanan</option>
-                        <option value="Cuci Kering">Cuci Kering</option>
-                        <option value="Cuci Lipat">Cuci Kering dan Lipat</option>
-                        <option value="Setrika">Setrika Saja</option>
-                        <option value="Setrika">Cuci Kering dan Setrika</option>
+                        @foreach($layananData as $layanan)
+                            <option value="{{ $layanan->id_layanan }}">
+                                {{ $layanan->nama_layanan }}
+                            </option>
+                        @endforeach
                     </select>
-                    <select class="form-select form-select-sm" id="filterSelesai" style="max-width: 120px; font-size: 14px; color: #495057; border: 1px solid #ccc;">
+                    <select class="form-select form-select-sm" id="filter_status" style="max-width: 120px; font-size: 14px; color: #495057; border: 1px solid #ccc;">
                         <option value="">All Status</option>
                         <option value="belum selesai">Belum Selesai</option>
                         <option value="selesai">Selesai</option>
@@ -94,9 +97,10 @@
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3 row">
-                                <label for="created_at" class="col-sm-4 col-form-label fw-bold">Tanggal Pesanan:</label>
+                                <label for="pesanan_dibuat" class="col-sm-4 col-form-label fw-bold">Tanggal Pesanan:</label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="created_at" name="created_at" required>
+                                    {{-- <input type="date" class="form-control" id="pesanan_dibuat" name="pesanan_dibuat" required> --}}
+                                    <input type="datetime-local" class="form-control" id="pesanan_dibuat" name="pesanan_dibuat" required>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -119,9 +123,14 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="total_harga" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
+                                {{-- <label for="total_harga" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
                                 <div class="col-sm-8">
                                     <input type="number" class="form-control" id="total_harga" name="total_harga" readonly>
+                                </div> --}}
+                                <label for="total_harga_display" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
+                                <div class="col-sm-8">
+                                    <input type="hidden" class="form-control" id="total_harga" name="total_harga">
+                                    <span class="form-control-plaintext fw-bold" id="total_harga_display">0</span>
                                 </div>
                             </div>
 
@@ -171,10 +180,17 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
+                            {{-- @php
+                                $pesananDibuat = \Carbon\Carbon::parse($penjualanData->pesanan_dibuat);
+                                $pesananSelesai = \Carbon\Carbon::parse($penjualanData->pesanan_selesai);
+                            @endphp --}}
+
                             <div class="mb-3 row">
-                                <label for="edit_created_at" class="col-sm-4 col-form-label fw-bold">Tanggal Pesanan:</label>
+                                <label for="edit_pesanan_dibuat" class="col-sm-4 col-form-label fw-bold">Tanggal Pesanan:</label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="edit_pesanan_dibuat" name="created_at" required>
+                                    <input type="datetime-local" class="form-control" id="edit_pesanan_dibuat" name="pesanan_dibuat" 
+                                        {{-- value="{{ $penjualanData->pesanan_dibuat ? $pesananDibuat->format('Y-m-d\TH:i') : '' }}" --}}
+                                        required>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -197,9 +213,14 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="edit_total_harga" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
+                                {{-- <label for="edit_total_harga" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
                                 <div class="col-sm-8">
                                     <input type="number" class="form-control" id="edit_total_harga" name="total_harga" readonly>
+                                </div> --}}
+                                <label for="edit_total_harga_display" class="col-sm-4 col-form-label fw-bold">Total Harga (Rp):</label>
+                                <div class="col-sm-8">
+                                    <input type="hidden" class="form-control" id="edit_total_harga" name="total_harga">
+                                    <span class="form-control-plaintext fw-bold" id="edit_total_harga_display">0</span>
                                 </div>
                             </div>
 
@@ -237,7 +258,28 @@
         </div>
     </div>
 
-
+    {{-- Pop-up Delete Confirmation --}}
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-3 shadow-lg">
+                <div class="modal-header bg-danger text-white border-bottom-0 rounded-top-3">
+                    <h5 class="modal-title d-flex align-items-center" id="deleteConfirmationModalLabel">
+                        <i class="fas fa-trash-alt me-2 fa-lg"></i> Confirm Deletion
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <i class="fas fa-exclamation-circle text-danger mb-3" style="font-size: 3rem;"></i>
+                    <p class="lead">Are you sure you want to delete this record?</p>
+                    <p class="text-muted">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center border-top-0 pt-0">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger px-4" id="confirmDeleteButton">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -254,24 +296,67 @@
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    {{-- toastr --}}
     <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+    </script>
+
+    <script>
+        function formatNumberForDisplay(number) {
+            return new Intl.NumberFormat('id-ID').format(number);
+        }
+
         $(document).ready(function () {
-            var penjualanTable = $('#salesTable').DataTable({
-                // processing: true,
-                // serverSide: true,
+            let penjualanTable = $('#salesTable').DataTable({
+                processing: true,
+                serverSide: true,
                 ajax: '{{ route('sales.data_penjualan') }}',
                 scrollX: true,
                 scrollY: 300,
                 autoWidth:true,
-                // dom: 'Bfrtip',
                 dom: 'Blfrtip',
+                 ajax: {
+                    url: '{{ route('sales.data_penjualan') }}',
+                    data: function(d) {
+                        d.filter_tanggal = $('#filter_tanggal').val();
+                        d.filter_layanan = $('#filter_layanan').val();
+                        d.filter_status = $('#filter_status').val();
+                    }
+                },
                 columns: [
-                    // { data: 'id_penjualan', render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }, name: 'id_penjualan' },
-                    { data: 'id_penjualan', name: 'id_penjualan' },
-                    { data: 'created_at', name: 'created_at'},
-                    { data: 'id_layanan', name: 'id_layanan' },
+                    { data: 'id_penjualan', render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }, name: 'id_penjualan' },
+                    // { data: 'id_penjualan', name: 'id_penjualan' },
+                    { data: 'pesanan_dibuat', name: 'pesanan_dibuat'},
+                    { data: 'layanan', name: 'layanan.layanan' },
                     { data: 'berat', name: 'berat' },
-                    { data: 'total_harga', name: 'total_harga' },
+                    // { data: 'total_harga', name: 'total_harga' },
+                    {
+                        data: 'total_harga',
+                            render: function(data, type, row) {
+                                if (type === 'display' || type === 'filter') {
+                                    let number = Number(data);
+                                    if (isNaN(number)) return data ?? '-';
+                                    return number.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+                                }
+                                return data;
+                            },
+                            name: 'total_harga'
+                        },
                     { data: 'nama_customer',
                         render: function(data, type, row) {
                             if (type === 'display') {
@@ -287,11 +372,6 @@
                     { data: 'pesanan_selesai', name: 'pesanan_selesai' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ],
-                // drawCallback: function(settings) {
-                //     setTimeout(function() {
-                //         penjualanTable.columns.adjust().draw();
-                //     }, 20);
-                // },
                 "language": {
                     "emptyTable": "No records on this table.",
                     "info": "Shown _START_ to _END_ from _TOTAL_ data",
@@ -330,26 +410,23 @@
                 penjualanTable.search(this.value).draw();
             });
 
-            // Filter by layanan
-            $('#filterLayanan').on('change', function () {
-                penjualanTable.column(2).search(this.value).draw();
-            });
-
-            // Filter by status
-            $('#filterStatus').on('change', function () {
-                penjualanTable.column(7).search(this.value).draw();
+            // Filter
+            $('#filter_layanan, #filter_status').change(function(){
+                penjualanTable.ajax.reload();
             });
 
             // Reset filters
             $('#resetButton').on('click', function () {
                 $('#searchInput').val('');
-                $('#filterLayanan').val('');
-                $('#filterStatus').val('');
+                // $('#filter_layanan').val('');
+                // $('#filter_status').val('');
+                $('#filter_layanan').val('').trigger('change');
+                $('#filter_status').val('').trigger('change');
                 penjualanTable.search('').columns().search('').draw();
             });
 
             $('#salesTable').on('click', '.edit-btn', function () {
-                console.log('Edit button clicked');
+                // console.log('Edit button clicked');
                 event.preventDefault();
                 var id = $(this).data('id');
                 var url = '/admin/sales/' + id + '/edit';
@@ -360,11 +437,19 @@
                     success: function (data) {
                         $('#editForm').attr('action', '/admin/sales/' + id);
 
-                        var createdAtDate = data.created_at.split(' ')[0];
-                        $('#edit_created_at').val(createdAtDate);
+                        var createdAtDate = data.pesanan_dibuat.split(' ')[0];
+                        let pesananDibuatDatetime = new Date(data.pesanan_dibuat);
+                        let formattedPesananDibuat = pesananDibuatDatetime.getFullYear() + '-' +
+                            ('0' + (pesananDibuatDatetime.getMonth() + 1)).slice(-2) + '-' +
+                            ('0' + pesananDibuatDatetime.getDate()).slice(-2) + 'T' +
+                            ('0' + pesananDibuatDatetime.getHours()).slice(-2) + ':' +
+                            ('0' + pesananDibuatDatetime.getMinutes()).slice(-2);
+
+                        $('#edit_pesanan_dibuat').val(formattedPesananDibuat);
                         $('#edit_layanan').val(data.id_layanan);
                         $('#edit_berat').val(data.berat);
                         $('#edit_total_harga').val(data.total_harga);
+                        $('#edit_total_harga_display').text(formatNumberForDisplay(data.total_harga));
                         $('#edit_nama_customer').val(data.nama_customer);
                         $('#edit_whatsapp').val(data.whatsapp);
                         $('#edit_status').val(data.status);
@@ -399,27 +484,38 @@
                 });
             });
 
-            // Handle delete button click
-            $('#salesTable').on('click', '.delete-btn', function () {
-                console.log('Edit button clicked');
-                var id = $(this).data('id');
-                var url = '/admin/sales/delete/' + id;
+            let recordToDeleteId = null;
 
-                if (confirm('Are you sure you want to delete this record?')) {
+            // Handle delete button click - SHOW THE MODAL
+            $('#salesTable').on('click', '.delete-btn', function (event) {
+                event.preventDefault();
+                recordToDeleteId = $(this).data('id');
+                $('#deleteConfirmationModal').modal('show');
+            });
+
+            // Handle confirmation button click inside the modal - PERFORM DELETION
+            $('#confirmDeleteButton').on('click', function () {
+                if (recordToDeleteId) {
+                    var url = '/admin/sales/delete/' + recordToDeleteId;
+
                     $.ajax({
                         url: url,
-                        type: 'POST',
+                        type: 'DELETE',
                         data: {
                             '_token': '{{ csrf_token() }}',
-                            '_method': 'DELETE',
+                            // '_method': 'DELETE',
                         },
                         success: function (response) {
+                            $('#deleteConfirmationModal').modal('hide');
+                            toastr.success(response.success || 'Record deleted successfully!', 'Success'); // Use a fallback message
                             penjualanTable.ajax.reload();
-                            toastr.success(response.success, 'Success');
+                            recordToDeleteId = null;
                         },
                         error: function (xhr, status, error) {
+                            $('#deleteConfirmationModal').modal('hide'); // Hide the modal
                             console.error("Error deleting record:", error);
-                            toastr.error('Failed to delete record.', 'Error');
+                            toastr.error('Failed to delete record.', 'Error'); // Show error toast
+                            recordToDeleteId = null; // Reset the ID
                         }
                     });
                 }
@@ -446,9 +542,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Add Records Modal Calculation ---
             const layananSelect = document.getElementById('layanan');
             const beratInput = document.getElementById('berat');
             const totalHargaInput = document.getElementById('total_harga');
+            const totalHargaDisplay = document.getElementById('total_harga_display');
 
             function calculateTotal() {
                 const selectedOption = layananSelect.options[layananSelect.selectedIndex];
@@ -456,27 +554,33 @@
                 const berat = parseFloat(beratInput.value) || 0;
 
                 const total = hargaPerKg * berat;
+
                 totalHargaInput.value = total.toFixed(0);
+                totalHargaDisplay.textContent = formatNumberForDisplay(total);
             }
             
             layananSelect.addEventListener('change', calculateTotal);
             beratInput.addEventListener('input', calculateTotal);
+            calculateTotal();
 
-            // Edit Records Modal
+            // --- Edit Records Modal Calculation ---
+            const editLayananSelect = document.getElementById('edit_layanan');
+            const editBeratInput = document.getElementById('edit_berat');
+            const editTotalHargaInput = document.getElementById('edit_total_harga'); // This is now the HIDDEN input
+            const editTotalHargaDisplay = document.getElementById('edit_total_harga_display'); // This is the NEW DISPLAY span
+
             function calculateEditTotal() {
                 const selectedOption = editLayananSelect.options[editLayananSelect.selectedIndex];
                 const hargaPerKg = parseFloat(selectedOption.getAttribute('data-price')) || 0;
                 const berat = parseFloat(editBeratInput.value) || 0;
 
                 const total = hargaPerKg * berat;
+
                 editTotalHargaInput.value = total.toFixed(0);
+                editTotalHargaDisplay.textContent = formatNumberForDisplay(total);
             }
 
-            const editLayananSelect = document.getElementById('edit_layanan');
-            const editBeratInput = document.getElementById('edit_berat');
-            const editTotalHargaInput = document.getElementById('edit_total_harga');
-
-            if (editLayananSelect && editBeratInput && editTotalHargaInput) {
+            if (editLayananSelect && editBeratInput && editTotalHargaInput && editTotalHargaDisplay) {
                 editLayananSelect.addEventListener('change', calculateEditTotal);
                 editBeratInput.addEventListener('input', calculateEditTotal);
             }

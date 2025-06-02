@@ -9,52 +9,67 @@
 {{-- CONTENT START --}}
     {{-- Data Overview Cards --}}
     <div class="row g-2">
-        <!-- Sales Card -->
+        <!-- Sales Received Card -->
         <div class="col-md-3">
             <a href="{{ route('sales.records') }}" style="text-decoration: none;">
                 <div class="card text-white text-center p-1" style="background: #288bc5;">
                     <div class="card-body p-2">
                         <i class="fas fa-cart-shopping fa-2x mb-2"></i>
-                        <h5>0 Sales Today</h5>
+                        <h5>{{ $todaySalesCount }} Sales Today</h5>
                         <p class="mb-1 small">Total Sales Today</p>
                     </div>
                 </div>
             </a>
         </div>
+
+        {{-- Today's Income Sales Card --}}
+        <div class="col-md-3">
+            <a href="{{ route('sales.records') }}" style="text-decoration: none;">
+                <div class="card text-white text-center p-1" style="background: #FF00B8;">
+                    <div class="card-body p-2">
+                        <i class="fa-solid fa-dollar-sign fa-2x mb-2"></i>
+                        <h5>Rp. {{ number_format($todayIncome, 0, ',', '.') }}</h5>
+                        <p class="mb-1 small">Total Income Today</p>
+                    </div>
+                </div>
+            </a>
+        </div>
         
-     {{-- Articles Pending Approval Card --}}
-<div class="col-md-3">
-    <div class="card text-white text-center p-1" style="background: #6A00F4;">
-        <div class="card-body p-2">
-            <i class="fas fa-file-alt fa-2x mb-2"></i>
-            <h5>{{ $pendingCount }} Articles Need Approval</h5>
-            <p class="mb-1 small">Pending Articles</p>
+        <!-- Articles Pending Approval Card -->
+        <div class="col-md-3">
+                <div class="card text-white text-center p-1" style="background: #6A00F4;">
+                    <div class="card-body p-2">
+                        <i class="fas fa-file-alt fa-2x mb-2"></i>
+                        <h5>{{ $articlesNeedingApproval }} Articles Need Approval</h5>
+                        <p class="mb-1 small">Pending Articles</p>
+                    </div>
+                </div>
+        </div>
+
+        {{-- Published Articles Card --}}
+        {{-- <div class="col-md-3">
+            <div class="card text-white text-center p-1" style="background: #FF00B8;">
+                <div class="card-body p-2">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <h5>12 Published Articles</h5>
+                    <p class="mb-1 small">Published Articles</p>
+                </div>
+            </div>
+        </div> --}}
+
+        <!-- Pending FAQs Approval Card -->
+        <div class="col-md-3">
+            <a href="{{ route('faq.approval') }}" style="text-decoration: none;">
+                <div class="card text-white text-center p-1" style="background: #26a37e;">
+                    <div class="card-body p-2">
+                        <i class="fas fa-question-circle fa-2x mb-2"></i>
+                        <h5>{{ $faqsNeedApproval }} FAQs Need Approval</h5>
+                        <p class="mb-1 small">Pending FAQs</p>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
-</div>
-
-{{-- Published Articles Card --}}
-<div class="col-md-3">
-    <div class="card text-white text-center p-1" style="background: #FF00B8;">
-        <div class="card-body p-2">
-            <i class="fas fa-check-circle fa-2x mb-2"></i>
-            <h5>{{ $publishedCount }} Published Articles</h5>
-            <p class="mb-1 small">Published Articles</p>
-        </div>
-    </div>
-</div>
-
-{{-- Pending FAQs Approval Card --}}
-<div class="col-md-3">
-    <div class="card text-white text-center p-1" style="background: #26a37e;">
-        <div class="card-body p-2">
-            <i class="fas fa-question-circle fa-2x mb-2"></i>
-            <h5>{{ $faqPendingCount }} FAQs Need Approval</h5>
-            <p class="mb-1 small">Pending FAQs</p>
-        </div>
-    </div>
-</div>
-
 
     {{-- Title for Chart Section --}}
     <div class="p-2 rounded mb-3 mt-3 d-flex align-items-center gap-2" style="background-color: rgba(232,236,239,255);">

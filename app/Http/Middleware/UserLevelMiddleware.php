@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserLevelMiddleware
 {
-    public function handle(Request $request, Closure $next, int $level): Response
+    public function handle(Request $request, Closure $next, ...$levels): Response
     {
-        if (Auth::check() && Auth::user()->level == $level) {
+        if (Auth::check() && in_array(Auth::user()->level, $levels)) {
             return $next($request);
         }
 

@@ -10,35 +10,39 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body>
-    <div class="login-container">
-        <h2>Welcome Back!</h2>
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <div class="input-group">
-                {{-- <input type="text" name="username" class="input-field" placeholder="Email / Username" required> --}}
-                <input type="text" name="username" class="input-field" placeholder="Email / Username">
-            </div>
-            <div class="input-group">
-                {{-- <input type="password" name="password" id="password" class="input-field" placeholder="Password" required> --}}
-                <input type="password" name="password" id="password" class="input-field" placeholder="Password">
-                <span class="password-toggle" onclick="togglePasswordVisibility()">
-                    <i id="togglePassword" class="fas fa-eye"></i>
-                </span>
-            </div>
-
-            <div class="login-options">
-                <div class="remember-me">
-                    <label>
-                        <input type="checkbox" name="remember"> Remember Me
-                    </label>
+    <div class="main-container"> 
+        <div class="logo-section"> 
+            <img src="{{ asset('Logonobackground.png') }}" alt="company-logo">
+            {{-- <h2>Fast Laundry</h2>
+            <p>Welcome to our platform!</p> --}}
+        </div>
+        <div class="login-container"> <h2>Welcome Back!</h2>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="login" class="input-field" placeholder="Email / Username" required>
                 </div>
-                <div class="forgot-password">
-                    <a href="#">Forgot Password?</a>
+                <div class="input-group">
+                    <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
+                    <span class="password-toggle" onclick="togglePasswordVisibility()">
+                        <i id="togglePassword" class="fas fa-eye"></i>
+                    </span>
                 </div>
-            </div>
 
-            <button type="submit" class="login-button">Log In</button>
-        </form>
+                <div class="login-options">
+                    <div class="remember-me">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember Me
+                        </label>
+                    </div>
+                    {{-- <div class="forgot-password">
+                        <a href="#">Forgot Password?</a>
+                    </div> --}}
+                </div>
+
+                <button type="submit" class="login-button">Log In</button>
+            </form>
+        </div>
     </div>
 
     <script>

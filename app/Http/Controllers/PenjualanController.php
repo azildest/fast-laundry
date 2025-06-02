@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class PenjualanController extends Controller
@@ -26,6 +27,7 @@ class PenjualanController extends Controller
         // $User = (object) Session::get('users');
 
         $filter_status = Request('filter_status') ?? '';
+        $filter_layanan = Request('filter_layanan') ?? '';
 
         $today = Carbon::today();
         $dateBetween = [];
@@ -52,14 +54,18 @@ class PenjualanController extends Controller
         }
 
         $query = Penjualan::query()
-            ->orderBy('created_at', 'desc');
+            ->orderBy('id_penjualan', 'desc');
 
         if ($filterTgl) {
-            $query->whereBetween('created_at', [$dateBetween[0], $dateBetween[1]]);
+            $query->whereBetween('pesanan_dibuat', [$dateBetween[0], $dateBetween[1]]);
         }
 
         if ($filter_status) {
-            $query->where('status', 'LIKE', '%' . $filter_status . '%');
+            $query->where('status', $filter_status);
+        }
+
+        if ($filter_layanan) {
+            $query->where('id_layanan', $filter_layanan);
         }
 
         return DataTables::of($query)
@@ -71,9 +77,12 @@ class PenjualanController extends Controller
                 $withLineBreaks = preg_replace('/(.{1,40})(\s|$)/u', '$1<br>', $limitedText);
                 return nl2br($withLineBreaks);
             })
-            ->editColumn('id_layanan', function (Penjualan $penjualan) {
-                return $penjualan->id_layanan;
+            ->addColumn('layanan', function (Penjualan $penjualan) {
+                return $penjualan->layanan->nama_layanan ?? 'N/A';
             })
+            // ->editColumn('id_layanan', function (Penjualan $penjualan) {
+            //     return $penjualan->id_layanan;
+            // })
             ->editColumn('berat', function (Penjualan $penjualan) {
                 return $penjualan->berat;
             })
@@ -91,8 +100,8 @@ class PenjualanController extends Controller
                 }
                 return $status;
             })
-            ->editColumn('created_at', function (Penjualan $penjualan) {
-                return $penjualan->created_at ? $penjualan->created_at->format('Y-m-d, H:i:s') : '-';
+            ->editColumn('pesanan_dibuat', function (Penjualan $penjualan) {
+                return $penjualan->pesanan_dibuat ? $penjualan->pesanan_dibuat->format('Y-m-d, H:i:s') : '-';
             })
             ->editColumn('pesanan_selesai', function (Penjualan $penjualan) {
                 return $penjualan->pesanan_selesai
@@ -109,14 +118,14 @@ class PenjualanController extends Controller
                 $deleteButton = '<form id="delete-form-' . $penjualan->id_penjualan . '" action="' . $deleteUrl . '" method="post" style="display:inline;">
                                     <input type="hidden" name="_token" value="' . $csrfToken . '">
                                     <input type="hidden" name="_method" value="delete">
-                                    <button type="button" onclick="deleteFile(' . $penjualan->id_penjualan . ')" class="btn btn-sm btn-danger">
+                                    <button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $penjualan->id_penjualan . '">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>';
 
                 return $editButton . ' ' . $deleteButton;
             })
-            ->rawColumns(['nama_customer', 'status', 'action'])
+            ->rawColumns(['nama_customer', 'status', 'total_harga', 'action'])
             ->toJson();
     }
 
@@ -149,8 +158,13 @@ class PenjualanController extends Controller
 
     public function delete($id_penjualan)
     {
-        $penjualan = Penjualan::findOrFail($id_penjualan);
-        $penjualan->delete();
-        return redirect()->route('sales.records')->with('success', 'Record has been deleted.');
+        try {
+            $penjualan = Penjualan::findOrFail($id_penjualan);
+            $penjualan->delete();
+            return response()->json(['success' => 'Record has been deleted successfully!']);
+        } catch (\Exception $e) {
+            Log::error('Error deleting sales record: ' . $e->getMessage(), ['id_penjualan' => $id_penjualan]);
+            return response()->json(['error' => 'Failed to delete record.', 'message' => $e->getMessage()], 500);
+        }
     }
 }

@@ -13,39 +13,44 @@ class LoginController extends Controller
         return view('login');
     }
 
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'login' => 'required|string',
-    //         'password' => 'required|string',
-    //     ]);
+    public function login(Request $request)
+    {
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-    //     $loginField = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $loginField = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-    //     $credentials = [
-    //         $loginField => $request->input('login'),
-    //         'password' => $request->input('password'),
-    //     ];
+        $credentials = [
+            $loginField => $request->input('login'),
+            'password' => $request->input('password'),
+        ];
 
-    //     if (Auth::attempt($credentials)) {
-    //         $user = Auth::user();
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-    //         if ($user->level == 2) {
-    //             return redirect()->intended('/admin/dashboard');
-    //         } elseif ($user->level == 1) {
-    //             return redirect()->intended('/admin/dashboard');
-    //         } else {
-    //             Auth::logout();
-    //             throw ValidationException::withMessages([
-    //                 'login' => ['Invalid user level.'],
-    //             ]);
-    //         }
-    //     }
+            // dd($user);
 
-    //     throw ValidationException::withMessages([
-    //         'login' => ['Invalid credentials.'],
-    //     ]);
-    // }
+            if ($user->level == 2) {
+                return redirect()->intended('/admin/dashboard');
+            } elseif ($user->level == 1) {
+                return redirect()->intended('/admin/dashboard');
+            } else {
+                Auth::logout();
+                throw ValidationException::withMessages([
+                    'login' => ['Invalid user level.'],
+                ]);
+            }
+        }
+
+        // dd($request->all(), $credentials);
+        // dd("Authentication failed. Credentials: ", $credentials);
+
+        throw ValidationException::withMessages([
+            'login' => ['Invalid credentials.'],
+        ]);
+    }
 
     public function logout(Request $request)
     {
