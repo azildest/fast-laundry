@@ -1,16 +1,21 @@
 <?php
 
 use App\Models\Faq;
+use App\Models\Account;
 use App\Models\Layanan;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ArtikelController;
+
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
 
-use App\Http\Controllers\ArtikelController;
-use App\Models\Faq;
+// use App\Models\Faq;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,10 +60,19 @@ Route::get('/', function () {
 Route::get('/kemitraan', function () {
     return view('layouts.components.kemitraan');
 })->name('kemitraan');
-// admin side
-Route::get('/admin/dashboard', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
+
+Route::get('/HubungiKami', function () {
+    return view('layouts.components.HubungiKami');
+})->name('HubungiKami');
+
+Route::get('/visitor/kemitraan', function () {
+    $faqs = Faq::all(); // Ambil data dari tabel `faq`
+    return view('visitor.kemitraan', compact('faqs'));
+});
+// Visitor
+
+// Admin/Owner side
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/admin/graphics', function () {
     return view('dashboard.graphics');
@@ -66,21 +80,9 @@ Route::get('/admin/graphics', function () {
 
 Route::get('/faq/publikasi', [FaqController::class, 'approvalIndex'])->name('ownerfaq');
 
-
-// Route::get('/admin/faq', function () {
-//     return view('faq.allfaq');
-// })->name('allfaq');
-
-Route::get('/HubungiKami', function () {
-    return view('layouts.components.HubungiKami');
-})->name('HubungiKami');
-// Visitor
-
-// Admin/Owner side
-// Dashboard
-Route::get('/admin/dashboard', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
+Route::get('/', function () {
+    return redirect()->route('dashboard.redirect');
+});
 
 // Sales/Penjualan
 Route::get('/admin/sales/records', [PenjualanController::class, 'index'])->name('sales.records');
@@ -88,7 +90,7 @@ Route::post('/admin/sales/add', [PenjualanController::class, 'store'])->name('sa
 Route::get('/admin/sales/data_penjualan', [PenjualanController::class, 'data_penjualan'])->name('sales.data_penjualan');
 Route::get('/admin/sales/{id_penjualan}/edit', [PenjualanController::class, 'edit'])->name('sales.edit');
 Route::put('/admin/sales/{id_penjualan}', [PenjualanController::class, 'update'])->name('sales.update');
-Route::post('/admin/sales/delete/{id_penjualan}', [PenjualanController::class, 'delete'])->name('sales.delete');
+Route::delete('/admin/sales/delete/{id_penjualan}', [PenjualanController::class, 'delete'])->name('sales.delete');
 
 // Service/Layanan
 Route::get('/admin/services/records', [LayananController::class, 'index'])->name('services.records');
@@ -96,14 +98,19 @@ Route::get('/admin/services/data_layanan', [LayananController::class, 'data_laya
 Route::get('/admin/services/{id_layanan}/edit', [LayananController::class, 'edit'])->name('services.edit');
 Route::put('/admin/services/{id_layanan}', [LayananController::class, 'update'])->name('services.update');
 
+// Contact/Kontak
+Route::get('/admin/contact/list', [ContactController::class, 'index'])->name('contact.list');
+
+// Account/Akun
+Route::get('/admin/account/list', [AccountController::class, 'index'])->name('account.list');
 
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/login', function () {
-    // Temporarily bypass authentication and redirect
-    return redirect()->intended('/admin/dashboard');
-})->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+// Route::post('/login', function () {
+//     // Temporarily bypass authentication and redirect
+//     return redirect()->intended('/admin/dashboard');
+// })->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/admin/faq', [FaqController::class, 'index'])->name('allfaq');
@@ -114,25 +121,23 @@ Route::resource('faq', \App\Http\Controllers\FaqController::class);
 Route::post('/faq/{id}/status', [FaqController::class, 'updateStatus'])->name('faq.status');
 Route::get('/faq/owner/approval', [FaqController::class, 'approvalIndex'])->name('faq.approval');
 
-
-
-Route::get('/visitor/kemitraan', function () {
-    $faqs = Faq::all(); // Ambil data dari tabel `faq`
-    return view('visitor.kemitraan', compact('faqs'));
+// Routes for Owner
+Route::middleware(['auth', 'userlevel:1,2'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-// // Routes for Owner
 // Route::middleware(['auth', 'userlevel:2'])->group(function () {
 //     Route::get('/admin/dashboard', function () {
 //         return view('dashboard.dashboard');
 //     });
 // });
 
-// // Routes for Admin
+// Routes for Admin
 // Route::middleware(['auth', 'userlevel:1'])->group(function () {
 //     Route::get('/admin/dashboard', function () {
 //         return view('dashboard.dashboard');
 //     });
+// });
 // Admin/Owner side
 
 // Database

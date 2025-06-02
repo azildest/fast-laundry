@@ -97,17 +97,17 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="edit_harga_per_kg" class="col-sm-4 col-form-label fw-bold">Harga Per-Kg (Rp):</label>
+                                <label for="edit_harga_per_kg" class="col-sm-4 col-form-label fw-bold">Harga Per-kg (Rp):</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="edit_harga_per_kg" name="harga_per_kg" readonly>
+                                    <input type="text" class="form-control" id="edit_harga_per_kg" name="harga_per_kg" required>
+                                    <input type="hidden" id="edit_harga_per_kg_raw" name="harga_per_kg_raw">
                                 </div>
                             </div>
-
 
                             <div class="mb-3 row">
                                 <label for="edit_deskripsi" class="col-sm-4 col-form-label fw-bold">Deskripsi:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="edit_deskripsi" name="deskripsi">
+                                    <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -140,6 +140,10 @@
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
 
     <script>
+        function formatNumberForDisplay(number) {
+            return new Intl.NumberFormat('id-ID').format(number);
+        }
+
         $(document).ready(function () {
             var layananTable = $('#servicesTable').DataTable({
                 // processing: true,
@@ -154,7 +158,19 @@
                     // { data: 'id_penjualan', render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }, name: 'id_penjualan' },
                     { data: 'id_layanan', name: 'id_layanan' },
                     { data: 'nama_layanan', name: 'nama_layanan' },
-                    { data: 'harga_per_kg', name: 'harga_per_kg' },
+                    // { data: 'harga_per_kg', name: 'harga_per_kg' },
+                    {
+                        data: 'harga_per_kg',
+                            render: function(data, type, row) {
+                                if (type === 'display' || type === 'filter') {
+                                    let number = Number(data);
+                                    if (isNaN(number)) return data ?? '-';
+                                    return number.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+                                }
+                                return data;
+                            },
+                        name: 'harga_per_kg'
+                    },
                     { data: 'deskripsi',
                         render: function(data, type, row) {
                             if (type === 'display') {
@@ -167,11 +183,6 @@
                     },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ],
-                // drawCallback: function(settings) {
-                //     setTimeout(function() {
-                //         layananTable.columns.adjust().draw();
-                //     }, 20);
-                // },
                 "language": {
                     "emptyTable": "No records on this table.",
                     "info": "Shown _START_ to _END_ from _TOTAL_ data",
@@ -210,26 +221,8 @@
                 layananTable.search(this.value).draw();
             });
 
-            // Filter by layanan
-            // $('#filterLayanan').on('change', function () {
-            //     layananTable.column(2).search(this.value).draw();
-            // });
-
-            // Filter by status
-            // $('#filterStatus').on('change', function () {
-            //     layananTable.column(7).search(this.value).draw();
-            // });
-
-            // Reset filters
-            // $('#resetButton').on('click', function () {
-            //     $('#searchInput').val('');
-            //     $('#filterLayanan').val('');
-            //     $('#filterStatus').val('');
-            //     layananTable.search('').columns().search('').draw();
-            // });
-
             $('#servicesTable').on('click', '.edit-btn', function () {
-                console.log('Edit button clicked');
+                // console.log('Edit button clicked');
                 event.preventDefault();
                 var id = $(this).data('id');
                 var url = '/admin/services/' + id + '/edit';
@@ -240,7 +233,9 @@
                     success: function (data) {
                         $('#editForm').attr('action', '/admin/services/' + id);
 
-                        $('#edit_harga_per_kg').val(data.harga_per_kg);
+                        // $('#edit_harga_per_kg').val(data.harga_per_kg);
+                        $('#edit_harga_per_kg').val(new Intl.NumberFormat('id-ID').format(data.harga_per_kg));
+                        $('#edit_harga_per_kg_raw').val(data.harga_per_kg);
                         $('#edit_nama_layanan').val(data.nama_layanan);
                         $('#edit_deskripsi').val(data.deskripsi);
 
@@ -252,18 +247,37 @@
                     }
                 });
 
-                $('#editForm').on('submit', function (e) {
+                $('#editForm').off('submit').on('submit', function (e) {
                     e.preventDefault();
                     var url = $(this).attr('action');
-                    var formData = $(this).serialize();
+                    
+                    var hargaPerKgValue = $('#edit_harga_per_kg_raw').val(); 
+                    
+                    var formDataArray = $(this).serializeArray();
+                    var formData = new FormData();
+
+                    $.each(formDataArray, function(index, field){
+                        if (field.name === 'harga_per_kg') {
+                            return true; 
+                        }
+                        if (field.name === 'harga_per_kg_raw') {
+                            formData.append('harga_per_kg', hargaPerKgValue);
+                        } else {
+                            formData.append(field.name, field.value);
+                        }
+                    });
+
+                    formData.append('_method', 'PUT');
 
                     $.ajax({
                         url: url,
-                        type: 'PUT',
+                        type: 'POST',
                         data: formData,
+                        processData: false,
+                        contentType: false,
                         success: function (response) {
                             $('#editServicesModal').modal('hide');
-                            alert(response.success); 
+                            alert(response.success);
                             $('#servicesTable').DataTable().ajax.reload();
                         },
                         error: function (xhr, status, error) {

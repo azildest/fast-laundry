@@ -43,22 +43,13 @@ class LayananController extends Controller
             })
             ->editColumn('action', function (Layanan $layanan) {
                 $editUrl = route('services.edit', $layanan->id_layanan);
-                // $deleteUrl = route('services.delete', $layanan->id_layanan);
                 $csrfToken = csrf_token();
 
                 $editButton = '<a href="' . $editUrl . '" class="btn btn-sm btn-warning edit-btn" data-id="' . $layanan->id_layanan . '">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>';
-                // $deleteButton = '<form id="delete-form-' . $layanan->id_layanan . '" action="' . $deleteUrl . '" method="post" style="display:inline;">
-                //                     <input type="hidden" name="_token" value="' . $csrfToken . '">
-                //                     <input type="hidden" name="_method" value="delete">
-                //                     <button type="button" onclick="deleteFile(' . $layanan->id_layanan . ')" class="btn btn-sm btn-danger">
-                //                         <i class="fas fa-trash-alt"></i>
-                //                     </button>
-                //                 </form>';
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>';
 
-                return $editButton;
-                // . ' ' . $deleteButton;
+                return '<div class="text-center">' . $editButton . '</div>';
             })
             ->rawColumns(['deskripsi', 'action'])
             ->toJson();

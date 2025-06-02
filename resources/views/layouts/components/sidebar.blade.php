@@ -51,7 +51,9 @@
                 <ul class="list-unstyled ps-3">
                     <li><a href="#" class="nav-link {{ request()->routeIs('articles.create') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
                     <li><a href="#" class="nav-link {{ request()->routeIs('articles.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
+                    @if(Auth::check() && Auth::user()->level == 2)
+                        <li><a href="#" class="nav-link {{ request()->routeIs('articles.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
+                    @endif
                 </ul>
             </div>
         </li>
@@ -64,11 +66,15 @@
             </a>
             <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
                 <ul class="list-unstyled ps-3">
-                    <li><a href="{{ route('allfaq') }}"  class="nav-link {{ request()->routeIs('faqs.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
+                    <li><a href="{{ route('allfaq') }}"  class="nav-link {{ request()->routeIs('allfaq') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
                   <li>
-            <a href="{{ route('ownerfaq') }}" class="nav-link {{ request()->routeIs('ownerfaq') ? 'active' : '' }}">
-                <i class="fas fa-list-check me-3"></i> 
-                <span class="label">Publication</span>
+                {{-- <a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}"> --}}
+                @if(Auth::check() && Auth::user()->level == 2)
+                    <li><a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}">
+                    <i class="fas fa-list-check me-3"></i> 
+                    <span class="label">Publication</span>
+                    </a></li>
+                @endif
             </a>
             </li>
       </ul>
@@ -77,14 +83,14 @@
 
         <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('contact') ? 'active' : '' }}">
+            <a href="{{ route('contact.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('contact.list') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-phone me-3"></i> <span class="label">Contact</span>
                 </span>
             </a>
         </li>
         <li>
-            <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('accounts') ? 'active' : '' }}">
+            <a href="{{ route('account.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('account.list') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-user-circle me-3"></i> <span class="label">Accounts</span>
                 </span>
