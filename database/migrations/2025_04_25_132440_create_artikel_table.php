@@ -18,6 +18,7 @@ class CreateArtikelTable extends Migration
             $table->string('judul');
             $table->string('kategori');
             $table->text('isi');
+             $table->string('gambar');
             $table->string('status')->default('draft');
             $table->dateTime('tanggal_terbit');
             $table->timestamps();

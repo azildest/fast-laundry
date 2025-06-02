@@ -47,15 +47,25 @@
                 </div>
                 <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-            <div class="collapse {{ request()->is('articles*') ? 'show' : '' }}" id="articlesMenu">
-                <ul class="list-unstyled ps-3">
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.create') ? 'active' : '' }}"><i class="fas fa-plus me-3"></i> <span class="label">Create</span></a></li>
-                    <li><a href="#" class="nav-link {{ request()->routeIs('articles.all') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All Articles</span></a></li>
+           <div class="collapse {{ request()->is('admin/artikel*') ? 'show' : '' }}" id="articlesMenu">
+    <ul class="list-unstyled ps-3">
+        <li>
+            <a href="{{ route('admin.artikel.kelola') }}" 
+               class="nav-link {{ request()->routeIs('admin.artikel.kelola') ? 'active' : '' }}">
+                <i class="fas fa-list me-3"></i> <span class="label">Kelola Artikel</span>
+            </a>
+        </li>
                     @if(Auth::check() && Auth::user()->level == 2)
-                        <li><a href="#" class="nav-link {{ request()->routeIs('articles.publication') ? 'active' : '' }}"><i class="fas fa-list-check me-3"></i> <span class="label">Publication</span></a></li>
+            <li>
+            <a href="{{ route('admin.artikel.publikasi') }}" 
+               class="nav-link {{ request()->routeIs('admin.artikel.publikasi') ? 'active' : '' }}">
+                <i class="fas fa-list-check me-3"></i> <span class="label">Publikasi</span>
+            </a>
+        </li>
                     @endif
-                </ul>
-            </div>
+    </ul>
+</div>
+
         </li>
         <li>
             <a data-bs-toggle="collapse" href="#faqsMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('faqs*') ? 'active' : '' }}">
@@ -77,9 +87,10 @@
                 @endif
             </a>
             </li>
-      </ul>
-            </div>
-        </li>
+        </ul>
+    </div>
+</li>
+
 
         <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>

@@ -25,18 +25,28 @@
     </form>
   </div>
 
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-12">
-      <div class="card flex-md-row shadow rounded-4 border-0 p-3">
-        <img src="{{ asset('uang.png') }}" class="img-fluid rounded-4 me-md-3 mb-3 mb-md-0 article-highlight-img" alt="Potensi Bisnis Laundry">
-        <div class="d-flex flex-column justify-content-center">
-          <p class="text-muted mb-1 article-date">26/04/2025 <span class="badge badge-custom mb-2">Peluang Usaha</span></p>
-          <h5 class="fw-semibold">Potensi Bisnis Laundry yang Bisa Menghasilkan 100 Juta per Tahun</h5>
-          <a href="#" class="btn btn-sm btn-info text-white align-self-start mt-2">Baca Selengkapnya ></a>
-        </div>
+  @if($highlight)
+<div class="row justify-content-center mb-4">
+  <div class="col-md-12">
+    <div class="card flex-md-row shadow rounded-4 border-0 p-3">
+      <img src="{{ asset('storage/' . ($highlight->gambar ?? 'default.png')) }}"
+           onerror="this.onerror=null; this.src='{{ asset('default.png') }}';"
+           class="img-fluid rounded-4 me-md-3 mb-3 mb-md-0 article-highlight-img"
+           alt="{{ $highlight->judul }}">
+           
+      <div class="d-flex flex-column justify-content-center">
+        <p class="text-muted mb-1 article-date">
+          {{ \Carbon\Carbon::parse($highlight->tanggal_terbit)->format('d/m/Y') }}
+          <span class="badge badge-custom mb-2">{{ $highlight->kategori }}</span>
+        </p>
+        <h5 class="fw-semibold">{{ $highlight->judul }}</h5>
+        <a href="{{ route('artikel.show', $highlight->id_artikel) }}" class="btn btn-sm btn-info text-white align-self-start mt-2">Baca Selengkapnya ></a>
       </div>
     </div>
   </div>
+</div>
+@endif
+
 
   @if($articles->isEmpty())
     <div class="text-center py-5">
@@ -47,7 +57,13 @@
       @foreach($articles as $item)
   <div class="col">
     <div class="card h-100 border-0 shadow rounded-4">
-      <img src="{{ asset('home-laundry.png') }}" class="card-img-top rounded-top-4 small-article-img" alt="{{ $item->judul }}">
+    <img src="{{ asset('storage/' . ($item->gambar ?? 'default.png')) }}"
+     onerror="this.onerror=null; this.src='{{ asset('default.png') }}';"
+     class="card-img-top rounded-top-4 article-img"
+     alt="{{ $item->judul }}">
+
+
+
       <div class="card-body">
         <span class="badge badge-custom mb-2">{{ $item->kategori }}</span>
         <p class="text-muted mb-1 small-article-date">{{ \Carbon\Carbon::parse($item->tanggal_terbit)->format('d/m/Y') }}</p>
