@@ -28,9 +28,14 @@ class ArtikelController extends Controller
 
        $allArticles = $query->orderBy('tanggal_terbit', 'desc')->get();
 
-        $highlight = $allArticles->first(); // Ambil artikel terbaru untuk highlight
-        $articles = $allArticles->slice(1); // Sisanya untuk grid
-
+          // Ambil artikel highlight yang ditandai
+          $highlight = Article::where('is_highlight', true)
+                ->where('status', 'publish')
+                ->first();
+       $articles = $query
+                ->where('is_highlight', false)
+                ->orderBy('tanggal_terbit', 'desc')
+                ->get();
         return view('visitor.visitorarticle', compact('highlight', 'articles', 'categories'));
     }
     public function show($id)
@@ -38,15 +43,22 @@ class ArtikelController extends Controller
         $article = Article::where('id_artikel', $id)
             ->where('status', 'publish')
             ->firstOrFail();
+        
+        $highlight = Article::where('is_highlight', true)
+                ->where('status', 'publish')
+                ->first();
 
-        return view('visitor.articledetail', compact('article'));   
+        return view('visitor.articledetail', compact('article', 'highlight'));   
     }
 
-    public function kelola()
+  public function kelola()
 {
     $artikels = Article::orderBy('created_at', 'desc')->get();
-    return view('artikel.artikel', compact('artikels'));
+    $highlightExists = Article::where('is_highlight', true)->exists(); // cek apakah sudah ada artikel highlight
+
+    return view('artikel.artikel', compact('artikels', 'highlightExists'));
 }
+
 
 public function store(Request $request)
 {
@@ -64,6 +76,7 @@ public function store(Request $request)
     $artikel->isi = $request->isi;
     $artikel->status = 'draft'; // default
     $artikel->tanggal_terbit = now();
+    $artikel->is_highlight = true;
 
     // Jika ada upload gambar, simpan file
    if ($request->hasFile('gambar')) {
@@ -100,6 +113,11 @@ public function update(Request $request, $id)
     $file = $request->file('gambar');
     $filename = $file->store('artikel', 'public');
     $artikel->gambar = $filename;
+}
+    if ($request->has('is_highlight')) {
+    // Reset semua highlight
+    Article::where('is_highlight', true)->update(['is_highlight' => false]);
+    $artikel->is_highlight = true;
 }
 
 
@@ -140,6 +158,13 @@ public function publikasi()
     return view('artikel.publikasi', compact('artikels'));
 }
 
+public function destroy($id)
+{
+    $artikel = Article::findOrFail($id);
+    $artikel->delete();
+
+    return redirect()->route('admin.artikel.kelola')->with('success', 'Artikel berhasil dihapus.');
+}
 
 
 }
