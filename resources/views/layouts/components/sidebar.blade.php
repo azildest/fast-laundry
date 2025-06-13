@@ -94,12 +94,13 @@
 
         <li class="menu-section text-uppercase px-3 mt-3">Others</li>
         <li>
-            <a href="{{ route('contact.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('contact.list') ? 'active' : '' }}">
+            <a href="{{ route('kontak.edit', 1) }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('kontak.edit') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
-                    <i class="fas fa-phone me-3"></i> <span class="label">Contact</span>
+                    <i class="fas fa-phone me-3"></i> <span class="label">Kontak</span>
                 </span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('account.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('account.list') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">

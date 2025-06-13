@@ -25,7 +25,7 @@ class FaqController extends Controller
         'jawaban' => $request->jawaban,
     ]);
 
-    return redirect()->route('faq.index')->with('success', 'FAQ berhasil ditambahkan.');
+    return redirect()->route('allfaq')->with('success', 'FAQ berhasil ditambahkan.');
 }
 
 // Edit
@@ -55,11 +55,14 @@ public function update(Request $request, $id)
 }
 public function destroy($id)
 {
+    
+
     $faq = Faq::findOrFail($id);
     $faq->delete();
-
-    return redirect()->route('faq.index')->with('success', 'FAQ berhasil dihapus');
+    
+    return redirect()->route('allfaq')->with('success', 'FAQ berhasil dihapus.');
 }
+
 
 public function approvalIndex()
 {

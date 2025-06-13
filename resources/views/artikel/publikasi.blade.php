@@ -61,14 +61,25 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.modal-header {
+  background-color: #000; /* Warna hitam */
+}
 
+.modal-header .modal-title {
+  color: #fff; /* Warna teks putih */
+}
 </style>
 
     @endpush
 
 @section('content')
+
+<!-- Breadcrumb -->
 <div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
-  <h7 class="text-secondary small"> Dashboard / <a href="#" class="text-primary">Publikasi Artikel</a></h7>
+  <h7 class="text-secondary small">
+    <a href="{{ route('dashboard') }}" class="text-primary text-decoration-none">Dashboard</a> /
+    <span class="text-dark">Publikasi Artikel</span>
+  </h7>
 </div>
 
 <div class="row mb-3">
@@ -123,10 +134,10 @@
     data-kategori="{{ $artikel->kategori }}"
     data-isi="{{ $artikel->isi }}"
    data-gambar="{{ $artikel->gambar ? asset('storage/' . $artikel->gambar) : '' }}"
-
     data-id="{{ $artikel->id_artikel }}"
     data-tanggal="{{ \Carbon\Carbon::parse($artikel->tanggal_terbit)->format('d/m/Y') }}"
-  >
+    data-highlight="{{ $artikel->is_highlight ? 'Ya' : 'Tidak' }}"
+    >
     <i class="bi bi-eye"></i>
   </button>
 </td>
@@ -143,7 +154,8 @@
     <div class="modal-content rounded-4">
       <div class="modal-header">
         <h5 class="modal-title" id="previewModalLabel">Preview Artikel</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+
       </div>
      <div class="modal-body">
   <div class="row">
@@ -159,6 +171,10 @@
         <input type="text" id="previewKategori" class="form-control" readonly>
       </div>
 
+      <div class="mb-3">
+        <label class="form-label fw-bold">Highlight</label>
+        <input type="text" id="previewHighlight" class="form-control" readonly>
+      </div>
 
       <div class="mb-3">
         <label class="form-label fw-bold">Isi Artikel</label>
@@ -228,6 +244,8 @@ document.querySelectorAll('.preview-btn').forEach(button => {
     document.getElementById('previewJudul').value = button.dataset.judul;
     document.getElementById('previewKategori').value = button.dataset.kategori;
     document.getElementById('previewIsi').value = button.dataset.isi;
+     document.getElementById('previewHighlight').value = button.dataset.highlight;
+
 
     const gambarUrl = button.dataset.gambar;
     if (gambarUrl) {
