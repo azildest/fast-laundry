@@ -41,31 +41,30 @@
             </div>
         </li>
         <li>
-            <a data-bs-toggle="collapse" href="#articlesMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('articles*') ? 'active' : '' }}">
+            <a data-bs-toggle="collapse" href="#articlesMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('artikel*') ? 'active' : '' }}">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-newspaper me-3"></i> <span class="label">Articles</span>
                 </div>
                 <i class="fas fa-chevron-right ms-auto"></i>
             </a>
-           <div class="collapse {{ request()->is('admin/artikel*') ? 'show' : '' }}" id="articlesMenu">
-    <ul class="list-unstyled ps-3">
-        <li>
-            <a href="{{ route('admin.artikel.kelola') }}" 
-               class="nav-link {{ request()->routeIs('admin.artikel.kelola') ? 'active' : '' }}">
-                <i class="fas fa-list me-3"></i> <span class="label">Kelola Artikel</span>
-            </a>
-        </li>
-                    @if(Auth::check() && Auth::user()->level == 2)
-            <li>
-            <a href="{{ route('admin.artikel.publikasi') }}" 
-               class="nav-link {{ request()->routeIs('admin.artikel.publikasi') ? 'active' : '' }}">
-                <i class="fas fa-list-check me-3"></i> <span class="label">Publikasi</span>
-            </a>
-        </li>
-                    @endif
-    </ul>
-</div>
-
+           <div class="collapse {{ request()->is('artikel*') ? 'show' : '' }}" id="articlesMenu">
+                <ul class="list-unstyled ps-3">
+                    <li>
+                        <a href="{{ route('admin.artikel.kelola') }}" 
+                        class="nav-link {{ request()->routeIs('admin.artikel.kelola') ? 'active' : '' }}">
+                            <i class="fas fa-list me-3"></i> <span class="label">Kelola Artikel</span>
+                        </a>
+                    </li>
+                    <li>
+                        @if(Auth::check() && Auth::user()->level == 2)    
+                            <a href="{{ route('admin.artikel.publikasi') }}" 
+                            class="nav-link {{ request()->routeIs('admin.artikel.publikasi') ? 'active' : '' }}">
+                                <i class="fas fa-list-check me-3"></i> <span class="label">Publikasi</span>
+                            </a>        
+                        @endif
+                    </li>
+                </ul>
+            </div>
         </li>
         <li>
             <a data-bs-toggle="collapse" href="#faqsMenu" role="button" class="nav-link d-flex justify-content-between align-items-center dropdown-toggle {{ request()->is('faqs*') ? 'active' : '' }}">
@@ -77,37 +76,36 @@
             <div class="collapse {{ request()->is('faqs*') ? 'show' : '' }}" id="faqsMenu">
                 <ul class="list-unstyled ps-3">
                     <li><a href="{{ route('allfaq') }}"  class="nav-link {{ request()->routeIs('allfaq') ? 'active' : '' }}"><i class="fas fa-list me-3"></i> <span class="label">All FAQs</span></a></li>
-                  <li>
-                {{-- <a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}"> --}}
-                @if(Auth::check() && Auth::user()->level == 2)
-                    <li><a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}">
-                    <i class="fas fa-list-check me-3"></i> 
-                    <span class="label">Publication</span>
-                    </a></li>
-                @endif
-            </a>
-            </li>
-        </ul>
-    </div>
-</li>
+                    <li>
+                    @if(Auth::check() && Auth::user()->level == 2)
+                        <li><a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}">
+                            <i class="fas fa-list-check me-3"></i> 
+                            <span class="label">Publication</span>
+                        </a></li>
+                    @endif
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-
-        <li class="menu-section text-uppercase px-3 mt-3">Others</li>
+    @if(Auth::check() && Auth::user()->level == 2)
+        <li class="menu-section text-uppercase px-3 mt-3">Settings</li>
         <li>
             <a href="{{ route('kontak.edit', 1) }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('kontak.edit') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
-                    <i class="fas fa-phone me-3"></i> <span class="label">Kontak</span>
+                    <i class="fas fa-building me-3"></i> <span class="label">Company Profile</span>
                 </span>
             </a>
         </li>
 
         <li>
-            <a href="{{ route('account.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('account.list') ? 'active' : '' }}">
+            <a href="{{ route('users.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('users.list') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
-                    <i class="fas fa-user-circle me-3"></i> <span class="label">Accounts</span>
+                    <i class="fas fa-users me-3"></i> <span class="label">Manage Users</span>
                 </span>
             </a>
         </li>
+    @endif
     </ul>
 </div>
 
