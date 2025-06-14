@@ -1,9 +1,14 @@
 @extends('layouts.admin')
 
+
 @section('content')
+
 <!-- Breadcrumb -->
 <div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
-  <h7 class="text-secondary small">Dashboard / <a href="#" class="text-primary">Frequently Asked Questions</a></h7>
+  <h7 class="text-secondary small">
+    <a href="{{ route('dashboard') }}" class="text-primary text-decoration-none">Dashboard</a> /
+    <span class="text-dark">Frequently Asked Questions</span>
+  </h7>
 </div>
 
 <!-- Toolbar -->
@@ -42,21 +47,33 @@
           <span class="badge bg-danger">Blocked</span>
         @endif
       </td>
-      <td class="d-flex gap-2">
-        <button class="btn btn-sm btn-outline-primary editBtn" 
-                data-id="{{ $faq->id_pertanyaan }}"
-                data-pertanyaan="{{ $faq->pertanyaan }}"
-                data-jawaban="{{ $faq->jawaban }}">
-          <i class="fas fa-pencil-alt"></i>
-        </button>
-        <form action="{{ route('faq.destroy', $faq->id_pertanyaan) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="btn btn-sm btn-outline-danger">
-            <i class="fas fa-trash"></i>
-          </button>
-        </form>
-      </td>
+    <td>
+  <div class="d-flex gap-2">
+    <!-- Tombol Edit -->
+   <button type="button"
+        class="btn btn-warning btn-sm d-flex align-items-center justify-content-center"
+        data-id="{{ $faq->id_pertanyaan }}"
+        data-pertanyaan="{{ $faq->pertanyaan }}"
+        data-jawaban="{{ $faq->jawaban }}"
+        title="Edit FAQ"
+        style="width: 34px; height: 34px; padding: 0;"
+        onclick="editFaq(this)">
+      <i class="fas fa-pencil-alt text-dark"></i>
+    </button>
+
+    <!-- Tombol Hapus -->
+    <button type="button"
+            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
+            title="Hapus FAQ"
+            style="width: 34px; height: 34px; padding: 0;"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteConfirmationModal"
+          data-url="{{ route('faq.destroy', $faq->id_pertanyaan) }}"
+>
+      <i class="fas fa-trash-alt text-white"></i>
+    </button>
+  </div>
+</td>
     </tr>
     @endforeach
   </tbody>
@@ -66,10 +83,11 @@
 <div class="modal fade" id="faqModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Tambah FAQ</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+     <div class="modal-header bg-dark text-white">
+  <h5 class="modal-title" id="modalTitle">Tambah FAQ</h5>
+  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
       <form method="POST" id="faqForm">
         @csrf
         <input type="hidden" name="_method" id="formMethod" value="POST">
@@ -95,43 +113,90 @@
 
 <!-- Script FAQ -->
 <script>
-  const modal = new bootstrap.Modal(document.getElementById('faqModal'));
-  const form = document.getElementById('faqForm');
-  const title = document.getElementById('modalTitle');
-  const method = document.getElementById('formMethod');
-  const idField = document.getElementById('faqId');
 
-  document.getElementById('addFaqBtn').addEventListener('click', () => {
-    form.action = "{{ route('faq.store') }}";
-    method.value = 'POST';
-    title.innerText = 'Tambah FAQ';
-    idField.value = '';
-    document.getElementById('pertanyaan').value = '';
-    document.getElementById('jawaban').value = '';
-    modal.show();
-  });
+  document.addEventListener('DOMContentLoaded', function () {
+    const deleteModal = document.getElementById('deleteConfirmationModal');
+    if (deleteModal) {
+      deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const url = button.getAttribute('data-url');
+        const form = deleteModal.querySelector('#deleteForm');
+        if (form) {
+          form.setAttribute('action', url);
+        }
+      });
+    }
 
-  document.querySelectorAll('.editBtn').forEach(button => {
-    button.addEventListener('click', () => {
+    const modal = new bootstrap.Modal(document.getElementById('faqModal'));
+    const form = document.getElementById('faqForm');
+    const title = document.getElementById('modalTitle');
+    const method = document.getElementById('formMethod');
+    const idField = document.getElementById('faqId');
+
+    document.getElementById('addFaqBtn').addEventListener('click', () => {
+      form.action = "{{ route('faq.store') }}";
+      method.value = 'POST';
+      title.innerText = 'Tambah FAQ';
+      idField.value = '';
+      document.getElementById('pertanyaan').value = '';
+      document.getElementById('jawaban').value = '';
+      modal.show();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const searchValue = this.value.toLowerCase();
+      document.querySelectorAll('#faqTable tr').forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(searchValue) ? '' : 'none';
+      });
+    });
+
+    window.editFaq = function (button) {
       const id = button.dataset.id;
       const pertanyaan = button.dataset.pertanyaan;
       const jawaban = button.dataset.jawaban;
+
       form.action = `/faq/${id}`;
       method.value = 'PUT';
       title.innerText = 'Edit FAQ';
       idField.value = id;
       document.getElementById('pertanyaan').value = pertanyaan;
       document.getElementById('jawaban').value = jawaban;
-      modal.show();
-    });
-  });
 
-  document.getElementById('searchInput').addEventListener('input', function () {
-    const searchValue = this.value.toLowerCase();
-    document.querySelectorAll('#faqTable tr').forEach(row => {
-      const text = row.innerText.toLowerCase();
-      row.style.display = text.includes(searchValue) ? '' : 'none';
-    });
+      modal.show();
+    }
   });
 </script>
+
+
+</script>
+{{-- Pop-up Delete Confirmation --}}
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 shadow-lg">
+            <div class="modal-header bg-danger text-white border-bottom-0 rounded-top-3">
+                <h5 class="modal-title d-flex align-items-center" id="deleteConfirmationModalLabel">
+                    <i class="fas fa-trash-alt me-2 fa-lg"></i> Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <i class="fas fa-exclamation-circle text-danger mb-3" style="font-size: 3rem;"></i>
+                <p class="lead">Are you sure you want to delete this record?</p>
+                <p class="text-muted">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center border-top-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+              <form id="deleteForm" method="POST" action="{{ route('faq.destroy', ['faq' => 1]) }}">
+                  @csrf
+                  @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

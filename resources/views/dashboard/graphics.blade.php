@@ -3,10 +3,14 @@
 @section('content')
 
     {{-- Title for Chart Section --}}
-    <div class="p-2 rounded mb-3 mt-3 d-flex align-items-center gap-2" style="background-color: rgba(232,236,239,255);">
-        <i class="fas fa-chart-simple text-secondary"></i>
-        <span class="text-black small fw-semibold">Dashboard / Grafik</span>
-    </div>
+  <!-- Breadcrumb -->
+<div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
+  <h7 class="text-secondary small">
+    <a href="{{ route('dashboard') }}" class="text-primary text-decoration-none">Dashboard</a> /
+    <span class="text-dark">Grafik</span>
+  </h7>
+</div>
+
 
 
     {{-- Chart Section --}}

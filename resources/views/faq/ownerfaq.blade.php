@@ -1,8 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Breadcrumb -->
 <div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
-  <h7 class="text-secondary small"> Dashboard / <a href="#" class="text-primary">Publikasi FAQ</a></h7>
+  <h7 class="text-secondary small">
+    <a href="{{ route('dashboard') }}" class="text-primary text-decoration-none">Dashboard</a> /
+    <span class="text-dark">Publikasi FAQs</span>
+  </h7>
 </div>
 
 <div class="row mb-3">

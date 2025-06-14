@@ -23,6 +23,7 @@ class Article extends Model
         'gambar', 
         'status',
         'tanggal_terbit',
+         'is_highlight',
     ];
 
     protected $dates = ['tanggal_terbit', 'created_at', 'updated_at', 'deleted_at'];

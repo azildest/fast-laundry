@@ -18,7 +18,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 50px;
+      gap: 20px;
       flex-wrap: wrap;
      
     }
@@ -87,7 +87,7 @@
     }
 
     .footer-nav {
-      margin: 30px 0 20px;
+      margin: 0 0 20px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -172,13 +172,34 @@
 
       <div class="footer-divider" aria-hidden="true"></div>
 
-      <div class="footer-social" role="list">
-        <a href="#" aria-label="Facebook" role="listitem"><img src="{{ asset('facebook.png') }}"/></a>
-        <a href="#" aria-label="X" role="listitem"><img src="{{ asset('x.png') }}" alt="X" /></a>
-        <a href="#" aria-label="LinkedIn" role="listitem"><img src="{{ asset('linkedin.png') }}" alt="LinkedIn" /></a>
-        <a href="#" aria-label="Instagram" role="listitem"><img src="{{ asset('instagram.png') }}" alt="Instagram" /></a>
-      </div>
-    </div>
+      @php $kontak = \App\Models\Kontak::first(); @endphp
+
+<div class="footer-social" role="list">
+ @if($kontak)
+  @if($kontak->facebook_url)
+    <a href="{{ $kontak->facebook_url }}" target="_blank" aria-label="Facebook" role="listitem">
+      <img src="{{ asset('facebook.png') }}" alt="Facebook" />
+    </a>
+  @endif
+  @if($kontak->x_url)
+    <a href="{{ $kontak->x_url }}" target="_blank" aria-label="X" role="listitem">
+      <img src="{{ asset('x.png') }}" alt="X" />
+    </a>
+  @endif
+  @if($kontak->linkedin_url)
+    <a href="{{ $kontak->linkedin_url }}" target="_blank" aria-label="LinkedIn" role="listitem">
+      <img src="{{ asset('linkedin.png') }}" alt="LinkedIn" />
+    </a>
+  @endif
+  @if($kontak->instagram_url)
+    <a href="{{ $kontak->instagram_url }}" target="_blank" aria-label="Instagram" role="listitem">
+      <img src="{{ asset('instagram.png') }}" alt="Instagram" />
+    </a>
+  @endif
+@endif
+
+</div>
+
 
     <nav class="footer-nav" aria-label="Footer Navigation">
       <a href="/visitor/beranda">Beranda</a>

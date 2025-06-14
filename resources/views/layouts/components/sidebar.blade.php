@@ -91,12 +91,13 @@
     @if(Auth::check() && Auth::user()->level == 2)
         <li class="menu-section text-uppercase px-3 mt-3">Settings</li>
         <li>
-            <a href="{{ route('contact.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('contact.list') ? 'active' : '' }}">
+            <a href="{{ route('kontak.edit', 1) }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('kontak.edit') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-building me-3"></i> <span class="label">Company Profile</span>
                 </span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('users.list') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('users.list') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
