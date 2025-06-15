@@ -16,6 +16,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\GrafikController;
 // use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -68,7 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Grafik
-    Route::get('/admin/graphics', function () { return view('dashboard.graphics');})->name('graphics');
+    Route::get('/admin/graphics', function () { return view('dashboard.graphics'); })->name('graphics');
+    Route::get('/admin/graphics/sales-data', [GrafikController::class, 'getSalesData'])->name('graphics.sales-data');
+
 
     // Sales/Penjualan
     Route::get('/admin/sales/records', [PenjualanController::class, 'index'])->name('sales.records');
