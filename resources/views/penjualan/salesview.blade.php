@@ -342,7 +342,7 @@
                     { data: 'id_penjualan', render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; }, name: 'id_penjualan' },
                     // { data: 'id_penjualan', name: 'id_penjualan' },
                     { data: 'pesanan_dibuat', name: 'pesanan_dibuat'},
-                    { data: 'layanan', name: 'layanan.layanan' },
+                    { data: 'layanan', name: 'layanan.layanan', orderable: false, searchable: false},
                     { data: 'berat', name: 'berat' },
                     // { data: 'total_harga', name: 'total_harga' },
                     {

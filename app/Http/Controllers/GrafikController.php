@@ -121,8 +121,13 @@ class GrafikController extends Controller
             ->orderByDesc('total')
             ->first();
 
+        // $layananInfo = $layananTerpopuler ? [
+        //     'nama' => $layananTerpopuler->layanan?->nama_layanan,
+        //     'total' => $layananTerpopuler->total
+        // ] : null;
+
         $layananInfo = $layananTerpopuler ? [
-            'nama' => $layananTerpopuler->layanan?->nama_layanan,
+            'nama' => optional($layananTerpopuler->layanan)->nama_layanan,
             'total' => $layananTerpopuler->total
         ] : null;
 

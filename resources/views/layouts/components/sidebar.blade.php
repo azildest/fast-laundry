@@ -16,7 +16,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('graphics') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->is('graphics') ? 'active' : '' }}">
+            <a href="{{ route('graphics') }}" class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('graphics') ? 'active' : '' }}">
                 <span class="d-flex align-items-center">
                     <i class="fas fa-chart-line me-3"></i> <span class="label"> Graphics </span>
                 </span>

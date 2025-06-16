@@ -40,6 +40,9 @@ Route::get('/', function () {
     return redirect()->route('visitor.visitordashboard');});
 
 Route::get('/visitor/beranda', [DashboardController::class, 'home'])->name('visitor.visitordashboard');
+// Route::get('/visitor/beranda', function(){
+//     return view('visitor.visitordashboard');
+// })->name('visitor.visitordashboard');
 
 // Route::get('/visitor/artikel', function () {
 //     return view('visitor.visitorarticle');
@@ -50,9 +53,13 @@ Route::get('/admin/artikel', [artikelController::class, 'index'])->name('allarti
 
 Route::get('/visitor/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
 Route::get('visitor/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
-Route::get('/visitor/kemitraan', function () { return view('visitor.kemitraan'); })->name('visitor.kemitraan');
 Route::get('/visitor/kemitraan', function () { 
-    $faqs = Faq::all(); return view('visitor.kemitraan', compact('faqs')); }); // Ambil data dari tabel `faq`
+    return view('visitor.kemitraan'); 
+})->name('visitor.kemitraan');
+Route::get('/visitor/kemitraan', function () { 
+    $faqs = Faq::all(); 
+    return view('visitor.kemitraan', compact('faqs')); 
+}); // Ambil data dari tabel `faq`
 Route::get('/visitor/hubungikami', function () {
     $kontakData = \App\Models\Kontak::all(); // Ambil semua data kontak
     return view('visitor.hubungikami', compact('kontakData'));})
