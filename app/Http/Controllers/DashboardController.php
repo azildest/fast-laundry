@@ -35,6 +35,17 @@ class DashboardController extends Controller
             'faqsNeedApproval'
         ));
     }
+
+    
+ public function home()
+    {
+        $latestArticles = Article::where('status', 'publish')
+                            ->orderBy('tanggal_terbit', 'desc')
+                            ->take(3)
+                            ->get();
+
+        return view('visitor.visitordashboard', compact('latestArticles'));
+    }
 }
 
 // namespace App\Http\Controllers;
@@ -63,15 +74,4 @@ class DashboardController extends Controller
 //      $faqPendingCount = Faq::where('status', 'in_progress')->count();
 
 //     return view('dashboard.dashboard', compact('pendingCount', 'publishedCount', 'faqPendingCount'));
-// }
-
-//  public function home()
-//     {
-//         $latestArticles = Article::where('status', 'publish')
-//                             ->orderBy('tanggal_terbit', 'desc')
-//                             ->take(3)
-//                             ->get();
-
-//         return view('visitor.visitordashboard', compact('latestArticles'));
-//     }
 // }
