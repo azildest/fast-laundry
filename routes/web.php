@@ -12,7 +12,7 @@ use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\KontakController;
+// use App\Http\Controllers\KontakController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LayananController;
@@ -21,7 +21,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\GrafikController;
 // use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PenjualanController;
+// use App\Http\Controllers\PenjualanController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
