@@ -23,26 +23,37 @@
             <li><hr class="dropdown-divider"></li>
 
             <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#"
+                    data-bs-toggle="modal" data-bs-target="#editUserProfileModal">
                     <i class="fas fa-user fa-fw me-2"></i> View Profile
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"
+                    data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                    <i class="fas fa-key fa-fw me-2"></i> Change Password
                 </a>
             </li>
 
             <li><hr class="dropdown-divider"></li>
 
             <li>
-                <a class="dropdown-item text-danger" href="#" 
+                {{-- <a class="dropdown-item text-danger" href="#" 
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt fa-fw me-2"></i> Log Out
+                </a> --}}
+                <a class="dropdown-item text-danger" href="#"
+                    data-bs-toggle="modal" data-bs-target="#logoutConfirmationModal">
+                    <i class="fas fa-sign-out-alt fa-fw me-2"></i> Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
-                </form>
+                </form> --}}
             </li>
         </ul>
     </div>
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
-    </form>
+    </form> --}}
 </nav>

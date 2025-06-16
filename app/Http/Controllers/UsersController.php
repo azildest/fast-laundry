@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
@@ -21,36 +22,12 @@ class UsersController extends Controller
 
     public function data_users(Request $request)
     {
-        // $User = (object) Session::get('users');
+        $loggedInUserId = Auth::id();
 
         $filter_roles = Request('filter_roles') ?? '';
 
-        $today = Carbon::today();
-        $dateBetween = [];
-        $filterTgl = false;
-
-        if ($request->input('filter_tanggal')) {
-            $filter_tanggal = explode(" - ", $request->input('filter_tanggal'));
-
-            foreach ($filter_tanggal as $date) {
-                $formattedDate = date_create($date);
-                if ($formattedDate) {
-                    $dateBetween[] = date_format($formattedDate, 'Y-m-d H:i:s');
-                }
-            }
-
-            if (count($dateBetween) === 2) {
-                $filterTgl = true;
-            }
-        } else {
-            $dateBetween = [
-                '1900-01-01 00:00:00',
-                Carbon::today()->endOfDay()->format('Y-m-d H:i:s'),
-            ];
-        }
-
         $query = Users::query()
-            ->orderBy('id_akun', 'desc');
+            ->orderBy('id_akun', 'asc');
 
         if ($filter_roles) {
             $query->where('level', $filter_roles);
@@ -82,14 +59,23 @@ class UsersController extends Controller
 
                 return '<div class="text-center">' . $roles . '</div>';
             })
-            ->editColumn('action', function (Users $users) {
+            ->editColumn('action', function (Users $users) use ($loggedInUserId){
                 // $editUrl = route('users.edit', $users->id_akun);
                 $deleteUrl = route('users.delete', $users->id_akun);
-                $csrfToken = csrf_token();
+                // $csrfToken = csrf_token();
 
-                $deleteButton = '<a href="' . $deleteUrl . '" class="btn btn-sm btn-danger delete-btn" data-id="' . $users->id_akun . '">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>';
+                // Kondisi ketika login
+                if ($users->id_akun == $loggedInUserId) {
+                    // Kalo akun itu sama dengan akun yg sedang login, tombol delete bakal ke-disable
+                    $deleteButton = '<button class="btn btn-sm btn-danger" disabled title="Cannot delete your own account">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>';
+                } else {
+                    // Kalo akunnya beda, tombol delete bisa di klik
+                    $deleteButton = '<a href="' . $deleteUrl . '" class="btn btn-sm btn-danger delete-btn" data-id="' . $users->id_akun . '">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>';
+                }
 
                 return '<div class="text-center">' . $deleteButton . '</div>';
             })
@@ -103,7 +89,7 @@ class UsersController extends Controller
             'level' => 'required|in:1,2',
             'email' => 'required|email|unique:akun,email',
             'username' => 'required|unique:akun,username',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:8|confirmed',
         ]);
         
         if ($validator->fails()) {
@@ -122,7 +108,7 @@ class UsersController extends Controller
 
         return response()->json([
             'success' => 'User has been added successfully!',
-            'message' => 'User added successfully!' // You can also send a generic message
+            'message' => 'User added successfully!'
         ], 200);
 
         // return redirect()->route('users.list')->with('success', 'User has been added.');
