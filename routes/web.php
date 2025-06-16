@@ -1,22 +1,24 @@
 <?php
 
 use App\Models\Faq;
+use App\Models\User;
 use App\Models\Account;
 use App\Models\Article;
 use App\Models\Layanan;
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\KontakController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PenjualanController;
-use App\Http\Controllers\KontakController;
 // use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenjualanController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -100,6 +102,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/services/data_layanan', [LayananController::class, 'data_layanan'])->name('services.data_layanan');
     Route::get('/admin/services/{id_layanan}/edit', [LayananController::class, 'edit'])->name('services.edit');
     Route::put('/admin/services/{id_layanan}', [LayananController::class, 'update'])->name('services.update');
+
+    // Profile User
+    Route::get('/admin/profile/{id_akun}/edit', [UserController::class, 'edit'])->name('profile.edit');
+    Route::put('/admin/profile/{id_akun}', [UserController::class, 'update'])->name('profile.update');
+    Route::put('/admin/profile/{id_akun}/changepassword', [UserController::class, 'changePassword'])->name('profile.changePassword');
 
     // Route khusus owner/level 2
     Route::middleware(['auth', 'userlevel:2'])->group(function () {
