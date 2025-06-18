@@ -52,14 +52,14 @@
                     <li>
                         <a href="{{ route('admin.artikel.kelola') }}" 
                         class="nav-link {{ request()->routeIs('admin.artikel.kelola') ? 'active' : '' }}">
-                            <i class="fas fa-list me-3"></i> <span class="label">Kelola Artikel</span>
+                            <i class="fas fa-list me-3"></i> <span class="label">Manage Articles</span>
                         </a>
                     </li>
                     <li>
                         @if(Auth::check() && Auth::user()->level == 2)    
                             <a href="{{ route('admin.artikel.publikasi') }}" 
                             class="nav-link {{ request()->routeIs('admin.artikel.publikasi') ? 'active' : '' }}">
-                                <i class="fas fa-list-check me-3"></i> <span class="label">Publikasi</span>
+                                <i class="fas fa-list-check me-3"></i> <span class="label">Publish Articles</span>
                             </a>        
                         @endif
                     </li>
@@ -80,7 +80,7 @@
                     @if(Auth::check() && Auth::user()->level == 2)
                         <li><a href="{{ route('faq.approval') }}" class="nav-link {{ request()->routeIs('faq.approval') ? 'active' : '' }}">
                             <i class="fas fa-list-check me-3"></i> 
-                            <span class="label">Publication</span>
+                            <span class="label">Publish FAQs</span>
                         </a></li>
                     @endif
                     </li>

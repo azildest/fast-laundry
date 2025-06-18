@@ -66,7 +66,7 @@ public function store(Request $request)
         'judul' => 'required|string|max:255',
         'kategori' => 'required|string|max:100',
         'isi' => 'required|string',
-        'gambar' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
+        'gambar' => $request->isMethod('post') ? 'required|image|mimes:jpeg,png,jpg,pdf,docx|max:2048' : 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
       
     ]);
 

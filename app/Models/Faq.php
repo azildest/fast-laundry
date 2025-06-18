@@ -9,9 +9,9 @@ class Faq extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'faq'; // pastikan ini benar
+    protected $table = 'faq'; 
    
-    protected $primaryKey = 'id_pertanyaan'; // ganti primary key default
+    protected $primaryKey = 'id_pertanyaan'; 
 
     protected $fillable = ['pertanyaan', 'jawaban', 'status'];
 

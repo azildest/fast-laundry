@@ -51,7 +51,7 @@ public function update(Request $request, $id)
 ]);
 
 
-    return redirect()->route('faq.index')->with('success', 'FAQ berhasil diperbarui.');
+    return redirect()->route('allfaq')->with('success', 'FAQ berhasil diperbarui.');
 }
 public function destroy($id)
 {
@@ -71,8 +71,8 @@ $faqs = Faq::orderByRaw("FIELD(status, 'in_progress', 'approved', 'blocked')")
            ->get();
 
     return view('faq.ownerfaq', compact('faqs'));
+    
 }
-
 public function updateStatus(Request $request, $id)
 {
     $request->validate([
@@ -83,7 +83,7 @@ public function updateStatus(Request $request, $id)
     $faq->status = $request->status;
     $faq->save();
 
-    return redirect()->back()->with('success', 'Status FAQ berhasil diperbarui.');
+    return redirect()->route('faq.approval')->with('success', 'Status FAQ berhasil diperbarui.');
 }
 
 

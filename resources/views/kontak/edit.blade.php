@@ -41,7 +41,7 @@
     /* Title */
     h2.fw-bold {
       max-width: 960px;
-      margin: 4rem auto 3rem auto;
+      margin: 3rem auto 1rem auto;
       font-weight: 800;
       font-size: 2.5rem;
       letter-spacing: 0.04em;
@@ -197,10 +197,12 @@
 @section('content')
 <div class="container-fluid px-4"> {{-- Tambahkan pembungkus --}}
   <!-- Breadcrumb -->
-  <div class="breadcrumb-custom mb-4">
-    <a href="{{ route('dashboard') }}">Dashboard</a> / <span class="text-dark">Edit Kontak</span>
-  </div>
-
+<div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
+  <h7 class="text-secondary small">
+    <a href="{{ route('dashboard') }}" class="text-primary text-decoration-none">Dashboard</a> /
+    <span class="text-dark">Profile Information</span>
+  </h7>
+</div>
   <!-- Judul Halaman -->
   <h2 class="fw-bold">Edit Informasi Kontak</h2>
 
