@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     {{-- Buttons for DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 <style>
   #dataTableLengthContainer label {
     display: flex;
@@ -29,9 +31,9 @@
 }
 
 .buttons-colvis {
-    color: rgb(255, 255, 255) !important; /* Ubah sesuai tema, misal 'white' jika dark */
+    color: rgb(255, 255, 255) !important; 
 }
-/* Reset efek shadow atau gradien */
+
 .dataTables_wrapper .dataTables_paginate .paginate_button {
   background: transparent !important;
   box-shadow: none !important;
@@ -71,7 +73,7 @@
 }
 </style>
 
-    @endpush
+@endpush
 
 
 @section('content')
@@ -84,11 +86,12 @@
 </div>
 
 
+
 <!-- Toolbar Atas -->
 <div class="row align-items-center mb-2">
   <div class="col">
-    <button type="button" id="addArtikelBtn" class="btn btn-primary btn-sm">
-      <i class="fas fa-plus me-1"></i> Tambah Artikel
+    <button type="button" id="addArtikelBtn" class="btn "  style="background: #26a37e; color: white; padding: 5px 10px; font-size: 14px;">
+      <i class="fas fa-plus me-1"></i> Add Artikel
     </button>
   </div>
 </div>
@@ -109,6 +112,7 @@
 </div>
 
 <!-- Table Artikel -->
+<div style="overflow-x: auto; width: 100%;">
 <table id="tabelArtikel" class="display nowrap" style="width:100%">
   <thead class="table-light text-center">
     <tr>
@@ -117,7 +121,7 @@
       <th style="width: 15%;">Kategori</th>
       <th style="width: 20%;">Tanggal Terbit</th>
       <th style="width: 10%;">Status</th>
-      <th style="width: 15%;">Aksi</th>
+      <th style="width: 15%;">Action</th>
     </tr>
   </thead>
   <tbody id="artikelTable">
@@ -172,6 +176,8 @@
     </tr>
     @endforelse
   </tbody>
+  </table>
+  </div>
   {{-- Pop-up Delete Confirmation for Artikel --}}
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -236,7 +242,7 @@
                 </select>
               </div>  
              
-              <!-- Tambahkan checkbox di sini -->
+              <!-- checkbox  -->
               <div class="mb-3 form-check">
                 <input class="form-check-input" type="checkbox" name="is_highlight" id="is_highlight"
                   {{ $highlightExists ? 'disabled' : '' }}>
@@ -261,7 +267,7 @@
                 <div class="border p-3 text-center rounded bg-light" style="border: 2px dashed #ccc;">
                   <i class="fas fa-cloud-upload-alt fa-2x mb-2 text-secondary"></i>
                   <p class="text-muted">Pilih file atau drag & drop<br><small>Format: png, jpg, pdf, docx</small></p>
-                  <input type="file" name="gambar" id="gambar" class="form-control mt-2" accept=".png,.jpg,.jpeg,.pdf,.docx">
+                  <input type="file" name="gambar" id="gambar" class="form-control mt-2" accept=".png,.jpg,.jpeg,.pdf,.docx" required>
                 </div>
               </div>
 
@@ -282,6 +288,7 @@
     </form>
   </div>
 </div>
+
 @push('scripts')
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -295,6 +302,38 @@
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+ 
+   
+  @if(session('success'))
+    toastr.success(" {{ session('success') }}");
+  @endif
+  @if(session('danger'))
+    toastr.danger(" {{ session('danger') }}");
+  @endif
+  @if(session('error'))
+    toastr.error(" {{ session('error') }}");
+  @endif
+
+</script>
 
 <!-- Script Modal & Search -->
 <script>
@@ -331,6 +370,7 @@
       document.getElementById('is_highlight').checked = false;
       document.getElementById('gambar').value = '';
       document.getElementById('previewGambarContainer').style.display = 'none';
+       document.getElementById('gambar').setAttribute('required', 'required'); 
   
   isHighlightCheckbox.checked = false;
   isHighlightCheckbox.disabled = highlightExists;
@@ -360,11 +400,11 @@
       if (gambar) {
         previewGambarContainer.style.display = 'block';
        previewGambar.src = gambar ? `/storage/${gambar}` : '';
-
+         document.getElementById('gambar').removeAttribute('required'); // TIDAK WAJIB saat edit
       } else {
         previewGambarContainer.style.display = 'none';
        previewGambar.src = gambar ? `/storage/${gambar}` : '';
-
+         document.getElementById('gambar').setAttribute('required', 'required'); // WAJIB kalau kosong
       }
 
       isHighlightCheckbox.checked = isHighlight;

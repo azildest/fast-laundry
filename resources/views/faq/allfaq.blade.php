@@ -13,8 +13,8 @@
 
 <!-- Toolbar -->
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <button type="button" id="addFaqBtn" class="btn btn-primary btn-sm">
-    <i class="fas fa-plus me-1"></i> FAQ
+  <button type="button" id="addFaqBtn" class="btn btn-sm"  style="background: #26a37e; color: white; padding: 5px 10px; font-size: 14px;">
+    <i class="fas fa-plus me-1" ></i> Add FAQ
   </button>
   <input type="text" id="searchInput" placeholder="Search..." class="form-control form-control-sm w-auto">
 </div>
@@ -28,7 +28,7 @@
       <th scope="col">Jawaban</th>
       <th scope="col">Tanggal</th>
       <th scope="col">Status</th>
-      <th scope="col">Aksi</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody id="faqTable">
@@ -84,7 +84,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
      <div class="modal-header bg-dark text-white">
-  <h5 class="modal-title" id="modalTitle">Tambah FAQ</h5>
+  <h5 class="modal-title" id="modalTitle" >Tambah FAQ</h5>
   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
@@ -110,8 +110,45 @@
     </div>
   </div>
 </div>
+@push('scripts')
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Script FAQ -->
+<!-- Toastr -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+ 
+   
+  @if(session('success'))
+    toastr.success(" {{ session('success') }}");
+  @endif
+  @if(session('danger'))
+    toastr.danger(" {{ session('danger') }}");
+  @endif
+  @if(session('error'))
+    toastr.error(" {{ session('error') }}");
+  @endif
+</script>  
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -166,10 +203,9 @@
       modal.show();
     }
   });
+  
 </script>
 
-
-</script>
 {{-- Pop-up Delete Confirmation --}}
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -198,5 +234,5 @@
         </div>
     </div>
 </div>
-
+@endpush
 @endsection
