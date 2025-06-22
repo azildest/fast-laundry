@@ -245,7 +245,8 @@
               <!-- checkbox  -->
               <div class="mb-3 form-check">
                 <input class="form-check-input" type="checkbox" name="is_highlight" id="is_highlight"
-                  {{ $highlightExists ? 'disabled' : '' }}>
+                 data-artikel_id=""> 
+                 {{-- {{ $highlightExists ? 'disabled' : '' }} --}}
                 <label class="form-check-label" for="is_highlight">
                   Jadikan sebagai artikel highlight
                 </label>
@@ -367,13 +368,14 @@
       document.getElementById('judul').value = '';
       document.getElementById('kategori').value = '';
       document.getElementById('isi').value = '';
-      document.getElementById('is_highlight').checked = false;
+      //document.getElementById('is_highlight').checked = false;
       document.getElementById('gambar').value = '';
       document.getElementById('previewGambarContainer').style.display = 'none';
        document.getElementById('gambar').setAttribute('required', 'required'); 
   
-  isHighlightCheckbox.checked = false;
+   isHighlightCheckbox.checked = false;
   isHighlightCheckbox.disabled = highlightExists;
+  isHighlightCheckbox.setAttribute('data-artikel_id', ''); // reset id juga
   highlightNotice.style.display = highlightExists ? 'block' : 'none';
 
   artikelModal.show();
@@ -407,9 +409,26 @@
          document.getElementById('gambar').setAttribute('required', 'required'); // WAJIB kalau kosong
       }
 
-      isHighlightCheckbox.checked = isHighlight;
-      isHighlightCheckbox.disabled = !isHighlight && highlightExists;
-      highlightNotice.style.display = (!isHighlight && highlightExists) ? 'block' : 'none';
+    // Set data id agar bisa dipakai kalau diperlukan
+isHighlightCheckbox.setAttribute('data-artikel_id', id);
+
+// Logika penanganan checkbox highlight saat edit
+if (isHighlight) {
+    // Jika artikel ini memang sedang jadi highlight
+    isHighlightCheckbox.checked = true;
+    isHighlightCheckbox.disabled = false;
+    highlightNotice.style.display = 'none';
+} else if (highlightExists) {
+    // Jika artikel ini bukan highlight, tapi highlight sudah ada
+    isHighlightCheckbox.checked = false;
+    isHighlightCheckbox.disabled = true;
+    highlightNotice.style.display = 'block';
+} else {
+    // Tidak ada highlight sama sekali, checkbox bebas dicentang
+    isHighlightCheckbox.checked = false;
+    isHighlightCheckbox.disabled = false;
+    highlightNotice.style.display = 'none';
+}
 
       artikelModal.show();
 
