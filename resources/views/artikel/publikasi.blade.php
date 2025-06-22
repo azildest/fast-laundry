@@ -68,6 +68,8 @@
 .modal-header .modal-title {
   color: #fff; /* Warna teks putih */
 }
+
+
 </style>
 
     @endpush
@@ -105,7 +107,7 @@
         <th>Kategori</th>
         <th>Tanggal</th>
         <th>Status</th>
-        <th style="width: 120px;">Aksi</th>
+        <th style="width: 120px;">Action</th>
       </tr>
     </thead>
     <tbody id="artikelTable">

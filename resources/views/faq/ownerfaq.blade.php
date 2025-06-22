@@ -23,7 +23,7 @@
         <th>Pertanyaan</th>
         <th>Jawaban</th>
         <th style="width: 100px;">Status</th>
-        <th style="width: 120px;">Aksi</th>
+        <th style="width: 120px;">Action</th>
       </tr>
     </thead>
     <tbody id="faqTable">

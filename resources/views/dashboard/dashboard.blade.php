@@ -12,7 +12,7 @@
         $cards = [
             ['route' => 'sales.records', 'bg' => '#288bc5', 'icon' => 'fa-cart-shopping', 'title' => "$todaySalesCount Sales Today", 'desc' => 'Total Sales Today'],
             ['route' => 'sales.records', 'bg' => '#FF00B8', 'icon' => 'fa-dollar-sign', 'title' => 'Rp. ' . number_format($todayIncome, 0, ',', '.'), 'desc' => 'Total Income Today'],
-            ['route' => null, 'bg' => '#6A00F4', 'icon' => 'fa-file-alt', 'title' => "$articlesNeedingApproval Articles Need Approval", 'desc' => 'Pending Articles'],
+            ['route' => 'admin.artikel.publikasi', 'bg' => '#6A00F4', 'icon' => 'fa-file-alt', 'title' => "$articlesNeedingApproval Articles Need Approval", 'desc' => 'Pending Articles'],
             ['route' => 'faq.approval', 'bg' => '#26a37e', 'icon' => 'fa-question-circle', 'title' => "$faqsNeedApproval FAQs Need Approval", 'desc' => 'Pending FAQs'],
         ];
     @endphp
