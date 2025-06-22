@@ -76,7 +76,15 @@ public function store(Request $request)
     $artikel->isi = $request->isi;
     $artikel->status = 'draft'; // default
     $artikel->tanggal_terbit = now();
+    
+  if ($request->has('is_highlight')) {
+    // Hapus highlight dari artikel lain
+    Article::where('is_highlight', true)->update(['is_highlight' => false]);
     $artikel->is_highlight = true;
+} else {
+    $artikel->is_highlight = false;
+}
+
 
     // Jika ada upload gambar, simpan file
    if ($request->hasFile('gambar')) {
