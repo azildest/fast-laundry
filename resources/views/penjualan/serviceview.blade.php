@@ -315,20 +315,14 @@
             // });
 
             // Toastr Notification
-            @if (session('pesan'))
-                @switch(session('level-alert'))
-                    @case('alert-success')
-                        toastr.success("{{ Session::get('pesan') }}", 'Berhasil');
-                        @break
-                    @case('alert-warning')
-                        toastr.warning("{{ Session::get('pesan') }}", 'Peringatan');
-                        @break
-                    @case('alert-error')
-                        toastr.error("{{ Session::get('pesan') }}", 'Error');
-                        @break
-                    @default
-                        toastr.info("{{ Session::get('pesan') }}", 'Info');
-                @endswitch
+            @if(session('success'))
+                toastr.success(" {{ session('success') }}");
+            @endif
+            @if(session('danger'))
+                toastr.danger(" {{ session('danger') }}");
+            @endif
+            @if(session('error'))
+                toastr.error(" {{ session('error') }}");
             @endif
         });
     </script>

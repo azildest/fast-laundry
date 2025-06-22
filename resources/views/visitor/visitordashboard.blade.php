@@ -123,7 +123,7 @@
 
           
           <div class="text-center mt-4">
-            <button class="btn btn-info text-black bg-white border-0 px-5" onclick="window.location.href='/visitor/artikel'">
+            <button class="btn btn-info text-black bg-white border-0 px-5" onclick="window.location.href='/artikel'">
                 Muat Lagi
             </button>
         </div>

@@ -43,7 +43,7 @@
                 <div class="login-options">
                     <div class="remember-me">
                         <label>
-                            <input type="checkbox" name="remember"> Remember Me
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                         </label>
                     </div>
                     {{-- <div class="forgot-password">

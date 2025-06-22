@@ -64,7 +64,8 @@ class LayananController extends Controller
     public function edit($id_layanan)
     {
         $layanan = Layanan::findOrFail($id_layanan);
-        return response()->json($layanan);
+        // return response()->json($layanan);
+        // return redirect()->route('services.records')->with('success', 'Service has been updated.');
     }
 
     public function update(Request $request, $id_layanan)
@@ -75,13 +76,15 @@ class LayananController extends Controller
 
         $layanan->update($dataToUpdate);
 
-        return response()->json(['success' => 'Service has been updated successfully!']);
+        // return response()->json(['success' => 'Service has been updated successfully!']);
+        return redirect()->route('services.records')->with('success', 'Service has been updated.');
     }
 
     public function delete($id_layanan)
     {
         $layanan = Layanan::findOrFail($id_layanan);
         $layanan->delete();
+        
         return redirect()->route('services.records')->with('success', 'Service has been deleted.');
     }
 }

@@ -54,6 +54,7 @@ class PenjualanController extends Controller
         }
 
         $query = Penjualan::query()
+            ->orderByRaw("CASE WHEN status = 'belum selesai' THEN 0 ELSE 1 END")
             ->orderBy('id_penjualan', 'desc');
 
         if ($filterTgl) {
@@ -139,6 +140,7 @@ class PenjualanController extends Controller
     {
         $penjualan = Penjualan::findOrFail($id_penjualan);
         return response()->json($penjualan);
+        // return redirect()->route('sales.records')->with('success', 'Record has been updated.');
     }
 
     public function update(Request $request, $id_penjualan)
@@ -153,7 +155,8 @@ class PenjualanController extends Controller
 
         $penjualan->update($dataToUpdate);
 
-        return response()->json(['success' => 'Record has been updated successfully!']);
+        // return response()->json(['success' => 'Record has been updated successfully!']);
+        return redirect()->route('sales.records')->with('success', 'Record has been updated.');
     }
 
     public function delete($id_penjualan)
@@ -166,5 +169,6 @@ class PenjualanController extends Controller
             Log::error('Error deleting sales record: ' . $e->getMessage(), ['id_penjualan' => $id_penjualan]);
             return response()->json(['error' => 'Failed to delete record.', 'message' => $e->getMessage()], 500);
         }
+        return redirect()->route('sales.records')->with('success', 'Record has been deleted.');
     }
 }

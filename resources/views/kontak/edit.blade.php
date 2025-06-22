@@ -204,7 +204,7 @@
   </h7>
 </div>
   <!-- Judul Halaman -->
-  <h2 class="fw-bold">Edit Informasi Kontak</h2>
+  <h2 class="fw-bold">Edit Company Profile</h2>
 
   <!-- Form Edit Kontak -->
   <div class="card shadow-sm">

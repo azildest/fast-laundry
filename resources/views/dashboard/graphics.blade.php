@@ -11,28 +11,28 @@
 <!-- Breadcrumb -->
 <div class="p-2 rounded mb-3" style="background-color: rgba(232,236,239,255);">
     <a href="{{ route('dashboard') }}" class="text-primary small text-decoration-none">Dashboard</a>
-    <h7 class="text-secondary small">/ Grafik</h7>
+    <h7 class="text-secondary small">/ Grapich</h7>
 </div>
 
 <!-- Filter Waktu -->
 <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
-    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="daily">Harian</button>
-    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="weekly">Mingguan</button>
-    <button class="btn btn-primary btn-sm filter-btn" data-period="monthly" id="defaultFilter">Bulanan</button>
-    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="yearly">Tahunan</button>
+    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="daily">Daily</button>
+    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="weekly">Weekly</button>
+    <button class="btn btn-primary btn-sm filter-btn" data-period="monthly" id="defaultFilter">Monthly</button>
+    <button class="btn btn-outline-primary btn-sm filter-btn" data-period="yearly">Yearly</button>
 
     <div class="ms-3" id="calendarFilterWrapper">
-        <label class="small me-1">Pilih Tanggal:</label>
+        <label class="small me-1">Select Date:</label>
         <input id="calendarInput" class="form-control form-control-sm" type="month" style="width: auto;">
     </div>
 </div>
 
 <!-- Ringkasan & Export -->
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5>Total Pendapatan: <span id="totalPendapatan" class="badge bg-success">💰 Rp 0</span></h5>
-    <div class="d-flex gap-2">
-        <button class="btn btn-outline-danger btn-sm" onclick="exportToPDF()">🧾 Ekspor PDF</button>
-    </div>
+    <h5>Total Income: <span id="totalPendapatan" class="badge bg-success">💰 Rp. 0</span></h5>
+    {{-- <div class="d-flex gap-2">
+        <button class="btn btn-outline-danger btn-sm" onclick="exportToPDF()">🧾 Export PDF</button>
+    </div> --}}
 </div>
 
 <!-- Statistik & Grafik -->
@@ -43,7 +43,7 @@
     <div class="row mb-4" id="dailyWrapper" style="display: none;">
         <div class="col-md-8">
             <div class="card shadow-sm h-100">
-                <div class="card-header bg-light"><strong>Grafik Harian</strong></div>
+                <div class="card-header bg-light"><strong>Daily Graphic</strong></div>
                 <div class="card-body">
                     <canvas id="dailyChart" height="250"></canvas>
                 </div>
@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm h-100" id="pieChartCard">
-                <div class="card-header bg-light"><strong>Komposisi Layanan Harian</strong></div>
+                <div class="card-header bg-light"><strong>Daily Service Compilation</strong></div>
                 <div class="card-body">
                     <canvas id="pieChart" height="250"></canvas>
                 </div>
@@ -62,7 +62,7 @@
     <!-- Grafik Utama -->
     <div class="card shadow-sm mb-4" id="mainChartCard">
         <div class="card-header bg-light">
-            <strong>Grafik Penjualan</strong> <span id="judulPeriode" class="text-muted small"></span>
+            <strong>Graphics Sales</strong> <span id="judulPeriode" class="text-muted small"></span>
         </div>
         <div class="card-body">
             <canvas id="salesChart" height="100"></canvas>
@@ -71,13 +71,13 @@
 
     <!-- Tabel Penjualan -->
     <div class="card shadow-sm" id="tabelCard">
-        <div class="card-header bg-light"><strong>Data Tabel Penjualan</strong></div>
+        <div class="card-header bg-light"><strong>Sales Data Table</strong></div>
         <div class="card-body p-0">
             <table class="table table-sm mb-0">
                 <thead>
                     <tr>
-                        <th>Tanggal</th>
-                        <th>Total Pendapatan</th>
+                        <th>Date</th>
+                        <th>Total Income</th>
                     </tr>
                 </thead>
                 <tbody id="dataTableBody"></tbody>
@@ -255,10 +255,10 @@ async function fetchSalesData(period, _b = null, _t = null, customUrl = null) {
         const naik = result.perbandingan_sebelumnya?.naik;
         const persen = result.perbandingan_sebelumnya?.persentase;
         const keterangan = persen !== undefined
-            ? (naik ? `📈 Naik ${persen}% dari periode sebelumnya |` : `📉 Menurun ${Math.abs(persen)}% dari periode sebelumnya |`)
+            ? (naik ? `📈 Increased by ${persen}% from previous period |` : `📉 Decreased by ${Math.abs(persen)}% from the previous period |`)
             : '';
-        const populer = result.layanan_terlaris?.nama ?? 'belum ada';
-        document.getElementById('statistikTambahan').textContent = `📊 Rata-rata: Rp ${Math.round(avg).toLocaleString('id-ID')} | Tertinggi: Rp ${max.toLocaleString('id-ID')} | ${keterangan} ⭐ Layanan terpopuler: ${populer}`;
+        const populer = result.layanan_terlaris?.nama ?? 'nothing yet';
+        document.getElementById('statistikTambahan').textContent = `📊 Average: Rp ${Math.round(avg).toLocaleString('id-ID')} | Highest: Rp ${max.toLocaleString('id-ID')} | ${keterangan} ⭐ Most popular service: ${populer}`;
 
         // Tabel
         let html = '';
@@ -296,7 +296,7 @@ function fetchByCalendar() {
     const value = calendarInput.value;
     let url = `/admin/graphics/sales-data?period=${activePeriod}`;
     if (activePeriod === 'daily') {
-        if (!value) return alert('Tanggal harus dipilih.');
+        if (!value) return alert('Please select a date.');
         url += `&date=${value}`;
     } else if (activePeriod === 'weekly') {
         const [year, week] = value.split('-W');

@@ -1,0 +1,78 @@
+.article-search-form {
+    height: 70px;
+  }
+  
+  .article-search-input-group {
+    flex: 1;
+  }
+  
+  .article-search-input-group .input-group-text {
+    background-color: transparent;
+    border: none;
+  }
+  
+  .article-search-input {
+    border: none;
+    background-color: #f8f9fa;
+  }
+  
+  .article-category-select {
+    max-width: 200px;
+    border: none;
+    background-color: #fff;
+  }
+  
+  .article-search-btn {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .sticky-filter {
+    z-index: 1020;
+  }
+  
+  .article-highlight-img {
+    width: 250px;
+    object-fit: cover;
+  }
+  
+  .article-date {
+    font-size: 14px;
+  }
+  
+  .article-card-img-top {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+  
+  .article-card-footer {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 0.5rem;
+  }
+
+  /* .small-article-card {
+    padding-bottom: 0.5rem;
+  } */
+  
+  .small-article-img {
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .small-article-date {
+    font-size: 14px;
+  }
+  
+  .small-article-card h6 {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  
+  .article-img {
+  height: 316px; /* kamu bisa sesuaikan tingginya */
+  object-fit: cover;
+  width: 100%;
+}
