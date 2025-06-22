@@ -19,14 +19,25 @@
         <div class="login-container"> <h2>Welcome Back!</h2>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+                
                 <div class="input-group">
                     <input type="text" name="login" class="input-field" placeholder="Email / Username" required>
+                    @error('login')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="input-group">
                     <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
                     <span class="password-toggle" onclick="togglePasswordVisibility()">
                         <i id="togglePassword" class="fas fa-eye"></i>
                     </span>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="login-options">
