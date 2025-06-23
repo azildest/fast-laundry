@@ -39,7 +39,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', function () {
     return redirect()->route('visitor.visitordashboard');});
 
-Route::get('/visitor/beranda', [DashboardController::class, 'home'])->name('visitor.visitordashboard');
+Route::get('/beranda', [DashboardController::class, 'home'])->name('visitor.visitordashboard');
 // Route::get('/visitor/beranda', function(){
 //     return view('visitor.visitordashboard');
 // })->name('visitor.visitordashboard');
@@ -51,16 +51,16 @@ Route::get('/visitor/beranda', [DashboardController::class, 'home'])->name('visi
 // Artikel
 Route::get('/admin/artikel', [artikelController::class, 'index'])->name('allartikel');
 
-Route::get('/visitor/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
-Route::get('visitor/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
-Route::get('/visitor/kemitraan', function () { 
+Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
+Route::get('/kemitraan', function () { 
     return view('visitor.kemitraan'); 
 })->name('visitor.kemitraan');
-Route::get('/visitor/kemitraan', function () { 
+Route::get('/kemitraan', function () { 
     $faqs = Faq::all(); 
     return view('visitor.kemitraan', compact('faqs')); 
 }); // Ambil data dari tabel `faq`
-Route::get('/visitor/hubungikami', function () {
+Route::get('/hubungikami', function () {
     $kontakData = \App\Models\Kontak::all(); // Ambil semua data kontak
     return view('visitor.hubungikami', compact('kontakData'));})
     ->name('visitor.hubungikami');
@@ -141,7 +141,7 @@ Route::middleware('auth')->group(function () {
         // Route::put('/admin/users/{id_penjualan}', [UsersController::class, 'update'])->name('sales.update');
         Route::delete('/admin/users/delete/{id_akun}', [UsersController::class, 'delete'])->name('users.delete');
 
-            // Contact/Kontak/Company Profile
+        // Contact/Kontak/Company Profile
         Route::get('/admin/contact/list', function () {
             return redirect()->route('kontak.edit', 1);
         })->name('contact.list');

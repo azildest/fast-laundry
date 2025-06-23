@@ -8,10 +8,10 @@
             </div>
         </a>
         <div class="d-flex align-items-center">
-            <a class="nav-link" href="/visitor/beranda">Beranda</a>
-            <a class="nav-link" href="/visitor/artikel">Artikel</a>
-            <a class="nav-link" href="/visitor/kemitraan">Kemitraan</a>
-            <a class="nav-link" href="/visitor/hubungikami">Hubungi Kami</a>
+            <a class="nav-link" href="/beranda">Beranda</a>
+            <a class="nav-link" href="/artikel">Artikel</a>
+            <a class="nav-link" href="/kemitraan">Kemitraan</a>
+            <a class="nav-link" href="/hubungikami">Hubungi Kami</a>
         </div>
     </div>
 </nav>

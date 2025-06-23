@@ -1,0 +1,73 @@
+/* body {
+    font-family: 'Poppins', sans-serif;
+} */
+
+body {
+    background: linear-gradient(to bottom, white 0%, white 85%, #3AC8FF 100%);
+}
+
+.underline-text {
+    text-decoration: underline;
+    color: #26AFE4;
+}
+
+.btn-info {
+    background-color: #26AFE4;
+    border-radius: 0px 10px 0px 10px;
+    border-color: #26AFE4;
+    box-shadow: 0 4px 8px rgba(113, 192, 208, 0.607);
+}
+
+.badge-custom {
+    color: #26AFE4;
+    border: 1px solid #26AFE4;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 0.35em 0.65em;
+    font-size: 0.75rem;
+}
+
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-medium {
+    font-weight: 500;
+}
+
+.small {
+    font-size: 0.875rem;
+}
+
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+.box-white {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.dashboard-article-img {
+  height: 316px; /* atau 200px sesuai kebutuhan */
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}

@@ -88,15 +88,14 @@ public function store(Request $request)
 
     // Jika ada upload gambar, simpan file
    if ($request->hasFile('gambar')) {
-    $file = $request->file('gambar');
-    $filename = $file->store('artikel', 'public');
-    $artikel->gambar = $filename;
-}
-
+        $file = $request->file('gambar');
+        $filename = $file->store('artikel', 'public');
+        $artikel->gambar = $filename;
+    }
 
     $artikel->save();
 
-    return redirect()->route('admin.artikel.kelola')->with('success', 'Artikel berhasil ditambahkan');
+    return redirect()->route('admin.artikel.kelola')->with('success', 'Article has been added.');
 }
 
 public function update(Request $request, $id)
@@ -114,7 +113,7 @@ public function update(Request $request, $id)
     $artikel->judul = $request->judul;
     $artikel->kategori = $request->kategori;
     $artikel->isi = $request->isi;
-      $artikel->status = 'draft'; // default
+    $artikel->status = 'draft'; // default
     $artikel->tanggal_terbit = now();
     
  if ($request->hasFile('gambar')) {
@@ -131,7 +130,7 @@ public function update(Request $request, $id)
 
     $artikel->save();
 
-    return redirect()->route('admin.artikel.kelola')->with('success', 'Artikel berhasil diperbarui');
+    return redirect()->route('admin.artikel.kelola')->with('success', 'Article has been updated.');
 }
 
 public function showVerifikasi($id)
@@ -147,7 +146,7 @@ public function approve($id)
     $artikel->tanggal_terbit = now(); // Update tanggal
     $artikel->save();
 
-    return redirect()->route('admin.artikel.publikasi')->with('success', 'Artikel berhasil dipublikasikan.');
+    return redirect()->route('admin.artikel.publikasi')->with('success', 'Article has been published.');
 }
 
 public function block($id)
@@ -156,7 +155,7 @@ public function block($id)
     $artikel->status = 'blocked';
     $artikel->save();
 
-    return redirect()->route('admin.artikel.publikasi')->with('danger', 'Artikel berhasil diblokir.');
+    return redirect()->route('admin.artikel.publikasi')->with('danger', 'Article successfully blocked.');
 }
 
 
@@ -171,7 +170,7 @@ public function destroy($id)
     $artikel = Article::findOrFail($id);
     $artikel->delete();
 
-    return redirect()->route('admin.artikel.kelola')->with('success', 'Artikel berhasil dihapus.');
+    return redirect()->route('admin.artikel.kelola')->with('success', 'Article has been deleted.');
 }
 
 

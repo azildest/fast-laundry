@@ -473,12 +473,21 @@
                         data: formData,
                         success: function (response) {
                             $('#editRecordsModal').modal('hide');
-                            alert(response.success); 
+                            // alert(response.success); 
+                            if (response.success) {
+                                toastr.success(response.success);
+                            }
                             $('#salesTable').DataTable().ajax.reload();
                         },
                         error: function (xhr, status, error) {
                             console.error("Error updating record:", error);
-                            alert("Failed to update record.");
+                            let errorMessage = "Failed to update record.";
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMessage = xhr.responseJSON.error;
+                            }
+                            toastr.error(errorMessage, 'Error'); 
                         }
                     });
                 });
@@ -522,20 +531,14 @@
             });
 
             // Toastr Notification
-            @if (session('pesan'))
-                @switch(session('level-alert'))
-                    @case('alert-success')
-                        toastr.success("{{ Session::get('pesan') }}", 'Berhasil');
-                        @break
-                    @case('alert-warning')
-                        toastr.warning("{{ Session::get('pesan') }}", 'Peringatan');
-                        @break
-                    @case('alert-error')
-                        toastr.error("{{ Session::get('pesan') }}", 'Error');
-                        @break
-                    @default
-                        toastr.info("{{ Session::get('pesan') }}", 'Info');
-                @endswitch
+            @if(session('success'))
+                toastr.success(" {{ session('success') }}");
+            @endif
+            @if(session('danger'))
+                toastr.danger(" {{ session('danger') }}");
+            @endif
+            @if(session('error'))
+                toastr.error(" {{ session('error') }}");
             @endif
         });
     </script>

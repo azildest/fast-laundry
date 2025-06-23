@@ -1,0 +1,19 @@
+.navbar {
+    height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.dropdown-toggle {
+    font-size: 14px;
+}
+
+.dropdown-toggle img {
+    object-fit: cover;
+}

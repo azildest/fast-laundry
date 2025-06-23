@@ -179,10 +179,12 @@ class GrafikController extends Controller
             $pieData = [];
 
             foreach ($penjualanLayanan as $layananId => $transaksis) {
-                $total = $transaksis->sum('total_harga');
+                // $total = $transaksis->sum('total_harga');
+                $count = $transaksis->count();
                 $namaLayanan = optional($transaksis->first()->layanan)->nama_layanan ?? 'Tidak diketahui';
                 $pieLabels[] = $namaLayanan;
-                $pieData[] = $total;
+                // $pieData[] = $total;
+                $pieData[] = $count;
             }
 
             $layananPie = [

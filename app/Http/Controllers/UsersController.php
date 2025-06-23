@@ -111,7 +111,7 @@ class UsersController extends Controller
             'message' => 'User added successfully!'
         ], 200);
 
-        // return redirect()->route('users.list')->with('success', 'User has been added.');
+        return redirect()->route('users.list')->with('success', 'User has been added.');
     }
 
     public function edit($id_akun)
@@ -132,7 +132,8 @@ class UsersController extends Controller
 
         $users->update($dataToUpdate);
 
-        return response()->json(['success' => 'Record has been updated successfully!']);
+        // return response()->json(['success' => 'Record has been updated successfully!']);
+        return redirect()->route('users.list')->with('success', 'User has been updated.');
     }
 
     public function delete($id_akun)
@@ -140,10 +141,12 @@ class UsersController extends Controller
         try {
             $users = Users::findOrFail($id_akun);
             $users->delete();
-            return response()->json(['success' => 'User has been deleted successfully!']);
+            // return response()->json(['success' => 'User has been deleted successfully!']);
+            return redirect()->route('users.list')->with('success', 'User has been deleted.');
         } catch (\Exception $e) {
             Log::error('Error deleting users record: ' . $e->getMessage(), ['id_akun' => $id_akun]);
-            return response()->json(['error' => 'Failed to delete user.', 'message' => $e->getMessage()], 500);
+            return redirect()->route('users.list')->with('danger', 'Failed to delete user: ' . $e->getMessage());
+            // return response()->json(['error' => 'Failed to delete user.', 'message' => $e->getMessage()], 500);
         }
     }
 }

@@ -27,7 +27,9 @@ class LoginController extends Controller
             'password' => $request->input('password'),
         ];
 
-        if (Auth::attempt($credentials)) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
 
             // dd($user);
@@ -39,7 +41,7 @@ class LoginController extends Controller
             } else {
                 Auth::logout();
                 throw ValidationException::withMessages([
-                    'login' => ['Invalid user level.'],
+                    'login' => ['Invalid user.'],
                 ]);
             }
         }
@@ -47,9 +49,21 @@ class LoginController extends Controller
         // dd($request->all(), $credentials);
         // dd("Authentication failed. Credentials: ", $credentials);
 
-        throw ValidationException::withMessages([
-            'login' => ['Invalid credentials.'],
-        ]);
+        // throw ValidationException::withMessages([
+        //     'login' => ['Invalid credentials.'],
+        // ]);
+
+        $userExists = \App\Models\User::where($loginField, $request->input('login'))->first();
+
+        if (!$userExists) {
+            throw ValidationException::withMessages([
+                'login' => ['Email or username is not registered.'],
+            ]);
+        } else {
+            throw ValidationException::withMessages([
+                'password' => ['Password is incorrect.'],
+            ]);
+        }
     }
 
     public function logout(Request $request)
