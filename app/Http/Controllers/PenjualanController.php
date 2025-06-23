@@ -151,12 +151,14 @@ class PenjualanController extends Controller
 
         if ($request->input('status') === 'selesai' && $penjualan->pesanan_selesai === null) {
             $dataToUpdate['pesanan_selesai'] = Carbon::now();
+        } elseif ($request->input('status') === 'belum selesai') {
+            $dataToUpdate['pesanan_selesai'] = null;
         }
 
         $penjualan->update($dataToUpdate);
 
-        // return response()->json(['success' => 'Record has been updated successfully!']);
-        return redirect()->route('sales.records')->with('success', 'Record has been updated.');
+        return response()->json(['success' => 'Record has been updated successfully!']);
+        // return redirect()->route('sales.records')->with('success', 'Record has been updated.');
     }
 
     public function delete($id_penjualan)

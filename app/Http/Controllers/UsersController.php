@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Users;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;w
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;

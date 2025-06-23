@@ -473,12 +473,21 @@
                         data: formData,
                         success: function (response) {
                             $('#editRecordsModal').modal('hide');
-                            alert(response.success); 
+                            // alert(response.success); 
+                            if (response.success) {
+                                toastr.success(response.success);
+                            }
                             $('#salesTable').DataTable().ajax.reload();
                         },
                         error: function (xhr, status, error) {
                             console.error("Error updating record:", error);
-                            alert("Failed to update record.");
+                            let errorMessage = "Failed to update record.";
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMessage = xhr.responseJSON.error;
+                            }
+                            toastr.error(errorMessage, 'Error'); 
                         }
                     });
                 });
